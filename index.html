@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Data Science - Imrane Larhrib</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .animate-fade-in { animation: fadeIn 0.5s ease-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        /* Modal Transitions */
+        .modal {
+            transition: opacity 0.3s ease-in-out;
+            opacity: 0;
+            pointer-events: none;
+        }
+        .modal.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+        
+        /* Bullet points in modal */
+        .modal-points li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .modal-points li::before {
+            content: "•";
+            color: #3b82f6;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+            line-height: 1.5rem;
+        }
+    </style>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        slate: {
+                            950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-950 text-slate-200 min-h-screen flex flex-col selection:bg-blue-500 selection:text-white">
+
+    <!-- NAVIGATION -->
+    <nav class="fixed top-0 w-full bg-slate-900/80 backdrop-blur-md border-b border-slate-800 z-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent cursor-pointer" onclick="switchTab('home')">
+                    IL.Data
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:flex space-x-1">
+                        <button onclick="switchTab('home')" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-300 text-slate-400 hover:text-white hover:bg-slate-800" data-tab="home">
+                            <i data-lucide="terminal" class="w-4 h-4"></i>
+                            <span data-i18n="nav_home">Accueil</span>
+                        </button>
+                        <button onclick="switchTab('about')" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-300 text-slate-400 hover:text-white hover:bg-slate-800" data-tab="about">
+                            <i data-lucide="users" class="w-4 h-4"></i>
+                            <span data-i18n="nav_about">À propos</span>
+                        </button>
+                        <button onclick="switchTab('projects')" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-300 text-slate-400 hover:text-white hover:bg-slate-800" data-tab="projects">
+                            <i data-lucide="code-2" class="w-4 h-4"></i>
+                            <span data-i18n="nav_projects">Projets</span>
+                        </button>
+                        <button onclick="switchTab('skills')" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-300 text-slate-400 hover:text-white hover:bg-slate-800" data-tab="skills">
+                            <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
+                            <span data-i18n="nav_skills">Compétences</span>
+                        </button>
+                    </div>
+
+                    <!-- Language Switcher -->
+                    <button onclick="toggleLanguage()" class="flex items-center gap-1 px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-sm font-semibold hover:border-blue-500 transition-colors">
+                        <span id="lang-display">FR</span>
+                        <i data-lucide="globe" class="w-3 h-3"></i>
+                    </button>
+
+                    <!-- Mobile Menu Button -->
+                    <button class="md:hidden text-slate-300 hover:text-white" onclick="toggleMenu()">
+                        <i data-lucide="menu" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-b border-slate-800 px-4 py-4 space-y-2">
+            <button onclick="switchTab('home')" class="block w-full text-left px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800" data-i18n="nav_home">Accueil</button>
+            <button onclick="switchTab('about')" class="block w-full text-left px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800" data-i18n="nav_about">À propos</button>
+            <button onclick="switchTab('projects')" class="block w-full text-left px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800" data-i18n="nav_projects">Projets</button>
+            <button onclick="switchTab('skills')" class="block w-full text-left px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800" data-i18n="nav_skills">Compétences</button>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="pt-24 pb-12 px-4 max-w-6xl mx-auto w-full flex-grow">
+
+        <!-- TAB: HOME -->
+        <div id="home" class="tab-content active animate-fade-in">
+            <div class="flex flex-col-reverse md:flex-row items-center justify-between gap-12 mt-8 md:mt-20">
+                <div class="flex-1 space-y-6">
+                    <div class="inline-block px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-sm font-medium border border-blue-500/20" data-i18n="home_avail">
+                        Disponible à partir d'Avril (10 semaines)
+                    </div>
+                    <h1 class="text-5xl md:text-7xl font-bold text-white leading-tight">
+                        <span data-i18n="home_hi">Bonjour, je suis</span> <span class="text-blue-500">Imrane Larhrib</span>
+                    </h1>
+                    <h2 class="text-2xl text-slate-300 font-medium" data-i18n="home_role">
+                        Étudiant en 2ème année BUT Science des Données à l'IUT de Metz
+                    </h2>
+                    <p class="text-xl text-slate-400 max-w-lg" data-i18n="home_desc">
+                        Passionné par la data, je transforme les données brutes en solutions concrètes grâce à Python, SQL et la Dataviz.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-4 pt-4">
+                        <button onclick="switchTab('projects')" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors flex items-center gap-2 shadow-lg shadow-blue-900/20">
+                            <span data-i18n="btn_projects">Voir mes projets</span> <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                        </button>
+                        <a href="cv.pdf" download class="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-lg font-medium transition-colors flex items-center gap-2 border border-slate-700">
+                            <span data-i18n="btn_cv">Télécharger CV</span> <i data-lucide="download" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+
+                    <div class="flex items-center gap-6 pt-8 text-slate-500">
+                        <a href="https://github.com/ton-pseudo" target="_blank" class="hover:text-blue-400 hover:-translate-y-1 transition-all"><i data-lucide="github" class="w-6 h-6"></i></a>
+                        <a href="https://linkedin.com/in/ton-profil" target="_blank" class="hover:text-blue-400 hover:-translate-y-1 transition-all"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
+                        <a href="mailto:imranelahrib2017@gmail.com" class="hover:text-blue-400 hover:-translate-y-1 transition-all"><i data-lucide="mail" class="w-6 h-6"></i></a>
+                    </div>
+                </div>
+
+                <div class="relative w-full md:w-1/3 aspect-square flex items-center justify-center">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-blue-500 to-cyan-500 rounded-full opacity-20 blur-3xl animate-pulse"></div>
+                    <div class="relative z-10 w-64 h-64 md:w-80 md:h-80 rounded-full bg-slate-800 border-4 border-slate-700 overflow-hidden flex items-center justify-center group hover:border-blue-500 transition-colors">
+                        <span class="text-6xl group-hover:scale-110 transition-transform duration-500 select-none">👋</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: PROJECTS -->
+        <div id="projects" class="tab-content animate-fade-in">
+            <div class="text-center space-y-4 mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-white" data-i18n="proj_title">Projets Réalisés</h2>
+                <p class="text-slate-400" data-i18n="proj_sub">Cliquez sur un projet pour voir les détails et les images</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Project Cards (Generated via JS or static) -->
+                <!-- Project 1 -->
+                <div onclick="openModal('ecommerce')" class="group bg-slate-900 border border-slate-800 hover:border-blue-500/50 rounded-xl p-6 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-900/10 hover:-translate-y-1 flex flex-col h-full cursor-pointer relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity text-blue-400"><i data-lucide="maximize-2" class="w-5 h-5"></i></div>
+                    <div class="flex justify-between items-start mb-4"><div class="p-3 rounded-lg bg-orange-500/10 text-orange-400"><i data-lucide="shopping-cart"></i></div></div>
+                    <h3 class="text-xl font-bold text-white mb-2" data-i18n="p_ecom_title">Analyse E-commerce & Dashboard</h3>
+                    <p class="text-sm text-blue-400 mb-3 font-medium">Leclerc & Power BI</p>
+                    <p class="text-slate-400 mb-6 text-sm flex-grow" data-i18n="p_ecom_short">Extraction automatisée et analyse comparative.</p>
+                    <div class="flex flex-wrap gap-2 mt-auto">
+                        <span class="px-3 py-1 text-xs rounded-full bg-slate-800 text-slate-300 border border-slate-700">Python</span>
+                        <span class="px-3 py-1 text-xs rounded-full bg-slate-800 text-slate-300 border border-slate-700">Power BI</span>
+                        <span class="px-3 py-1 text-xs rounded-full bg-slate-800 text-slate-300 border border-slate-700">+ Détails</span>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div onclick="openModal('dataviz')" class="group bg-slate-900 border border-slate-800 hover:border-blue-500/50 rounded-xl p-6 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-900/10 hover:-translate-y-1 flex flex-col h-full cursor-pointer relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity text-blue-400"><i data-lucide="maximize-2" class="w-5 h-5"></i></div>
+                    <div class="flex justify-between items-start mb-4"><div class="p-3 rounded-lg bg-green-500/10 text-green-400"><i data-lucide="award"></i></div></div>
+                    <h3 class="text-xl font-bold text-white mb-2" data-i18n="p_data_title">Challenge National Dataviz</h3>
+                    <p class="text-sm text-blue-400 mb-3 font-medium">INSEE & Open Data</p>
+                    <p class="text-slate-400 mb-6 text-sm flex-grow" data-i18n="p_data_short">Infographie primée sur la déscolarisation.</p>
+                    <div class="flex flex-wrap gap-2 mt-auto">
+                        <span class="px-3 py-1 text-xs rounded-full bg-slate-800 text-slate-300 border border-slate-700">Power BI</span>
+                        <span class="px-3 py-1 text-xs rounded-full bg-slate-800 text-slate-300 border border-slate-700">INSEE</span>
+                         <span class="px-3 py-1 text-xs rounded-full bg-slate-800 text-slate-300 border border-slate-700">+ Détails</span>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div onclick="openModal('immo')" class="group bg-slate-900 border border-slate-800 hover:border-blue-500/50 rounded-xl p-6 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-900/10 hover:-translate-y-1 flex flex-col h-full cursor-pointer relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity text-blue-400"><i data-lucide="maximize-2" class="w-5 h-5"></i></div>
+                    <div class="flex justify-between items-start mb-4"><div class="p-3 rounded-lg bg-blue-500/10 text-blue-400"><i data-lucide="home"></i></div></div>
+                    <h3 class="text-xl font-bold text-white mb-2" data-i18n="p_immo_title">Gestion Immobilière</h3>
+                    <p class="text-sm text-blue-400 mb-3 font-medium">Application Excel/VBA</p>
+                    <p class="text-slate-400 mb-6 text-sm flex-grow" data-i18n="p_immo_short">Application métier complète pour gérer biens et visites.</p>
+                    <div class="flex flex-wrap gap-2 mt-auto">
+                        <span class="px-3 py-1 text-xs rounded-full bg-slate-800 text-slate-300 border border-slate-700">VBA</span>
+                        <span class="px-3 py-1 text-xs rounded-full bg-slate-800 text-slate-300 border border-slate-700">Excel</span>
+                        <span class="px-3 py-1 text-xs rounded-full bg-slate-800 text-slate-300 border border-slate-700">+ Détails</span>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div onclick="openModal('bdd')" class="group bg-slate-900 border border-slate-800 hover:border-blue-500/50 rounded-xl p-6 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-900/10 hover:-translate-y-1 flex flex-col h-full cursor-pointer relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity text-blue-400"><i data-lucide="maximize-2" class="w-5 h-5"></i></div>
+                    <div class="flex justify-between items-start mb-4"><div class="p-3 rounded-lg bg-indigo-500/10 text-indigo-400"><i data-lucide="database-backup"></i></div></div>
+                    <h3 class="text-xl font-bold text-white mb-2" data-i18n="p_bdd_title">Conception Base de Données</h3>
+                    <p class="text-sm text-blue-400 mb-3 font-medium">SAE - MS Access & Looping</p>
+                    <p class="text-slate-400 mb-6 text-sm flex-grow" data-i18n="p_bdd_short">Conception MCD et implémentation relationnelle.</p>
+                    <div class="flex flex-wrap gap-2 mt-auto">
+                        <span class="px-3 py-1 text-xs rounded-full bg-slate-800 text-slate-300 border border-slate-700">Access</span>
+                        <span class="px-3 py-1 text-xs rounded-full bg-slate-800 text-slate-300 border border-slate-700">Looping</span>
+                        <span class="px-3 py-1 text-xs rounded-full bg-slate-800 text-slate-300 border border-slate-700">+ Détails</span>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div onclick="openModal('scraping')" class="group bg-slate-900 border border-slate-800 hover:border-blue-500/50 rounded-xl p-6 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-900/10 hover:-translate-y-1 flex flex-col h-full cursor-pointer relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity text-blue-400"><i data-lucide="maximize-2" class="w-5 h-5"></i></div>
+                    <div class="flex justify-between items-start mb-4"><div class="p-3 rounded-lg bg-purple-500/10 text-purple-400"><i data-lucide="terminal"></i></div></div>
+                    <h3 class="text-xl font-bold text-white mb-2" data-i18n="p_scrap_title">Web Scraping Pipeline</h3>
+                    <p class="text-sm text-blue-400 mb-3 font-medium">WiziPet</p>
+                    <p class="text-slate-400 mb-6 text-sm flex-grow" data-i18n="p_scrap_short">Collecte et structuration automatisée de données.</p>
+                    <div class="flex flex-wrap gap-2 mt-auto">
+                        <span class="px-3 py-1 text-xs rounded-full bg-slate-800 text-slate-300 border border-slate-700">Python</span>
+                        <span class="px-3 py-1 text-xs rounded-full bg-slate-800 text-slate-300 border border-slate-700">Selenium</span>
+                        <span class="px-3 py-1 text-xs rounded-full bg-slate-800 text-slate-300 border border-slate-700">+ Détails</span>
+                    </div>
+                </div>
+
+                 <!-- Project 6 -->
+                 <div onclick="openModal('quiz')" class="group bg-slate-900 border border-slate-800 hover:border-blue-500/50 rounded-xl p-6 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-900/10 hover:-translate-y-1 flex flex-col h-full cursor-pointer relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity text-blue-400"><i data-lucide="maximize-2" class="w-5 h-5"></i></div>
+                    <div class="flex justify-between items-start mb-4"><div class="p-3 rounded-lg bg-pink-500/10 text-pink-400"><i data-lucide="code-2"></i></div></div>
+                    <h3 class="text-xl font-bold text-white mb-2" data-i18n="p_quiz_title">Quiz Interactif IA</h3>
+                    <p class="text-sm text-blue-400 mb-3 font-medium">Projet Académique</p>
+                    <p class="text-slate-400 mb-6 text-sm flex-grow" data-i18n="p_quiz_short">Application web avec correction via LLM.</p>
+                    <div class="flex flex-wrap gap-2 mt-auto">
+                        <span class="px-3 py-1 text-xs rounded-full bg-slate-800 text-slate-300 border border-slate-700">Dash</span>
+                        <span class="px-3 py-1 text-xs rounded-full bg-slate-800 text-slate-300 border border-slate-700">LLM</span>
+                        <span class="px-3 py-1 text-xs rounded-full bg-slate-800 text-slate-300 border border-slate-700">+ Détails</span>
+                    </div>
+                </div>
+
+                 <!-- Project 7 -->
+                 <div onclick="openModal('warehouse')" class="group bg-slate-900 border border-slate-800 hover:border-blue-500/50 rounded-xl p-6 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-900/10 hover:-translate-y-1 flex flex-col h-full cursor-pointer relative overflow-hidden">
+                    <div class="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity text-blue-400"><i data-lucide="maximize-2" class="w-5 h-5"></i></div>
+                    <div class="flex justify-between items-start mb-4"><div class="p-3 rounded-lg bg-cyan-500/10 text-cyan-400"><i data-lucide="database"></i></div></div>
+                    <h3 class="text-xl font-bold text-white mb-2" data-i18n="p_wh_title">Data Warehouse Associatif</h3>
+                    <p class="text-sm text-blue-400 mb-3 font-medium">ETL & BI</p>
+                    <p class="text-slate-400 mb-6 text-sm flex-grow" data-i18n="p_wh_short">Mise en place d'un entrepôt de données complet.</p>
+                    <div class="flex flex-wrap gap-2 mt-auto">
+                        <span class="px-3 py-1 text-xs rounded-full bg-slate-800 text-slate-300 border border-slate-700">Apache Hop</span>
+                        <span class="px-3 py-1 text-xs rounded-full bg-slate-800 text-slate-300 border border-slate-700">SQL</span>
+                        <span class="px-3 py-1 text-xs rounded-full bg-slate-800 text-slate-300 border border-slate-700">+ Détails</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: SKILLS -->
+        <div id="skills" class="tab-content animate-fade-in">
+            <div class="text-center space-y-4 mb-8">
+                <h2 class="text-3xl md:text-4xl font-bold text-white" data-i18n="skill_title">Compétences Techniques</h2>
+                <p class="text-slate-400" data-i18n="skill_sub">Ma stack technique complète</p>
+            </div>
+
+            <div class="space-y-12 max-w-5xl mx-auto">
+                <!-- Main Stack -->
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="flex items-center gap-4 p-4 rounded-xl border border-blue-500/20 bg-blue-500/10 transition-all hover:scale-[1.02]">
+                        <div class="text-blue-400"><i data-lucide="terminal"></i></div>
+                        <span class="font-bold text-lg text-slate-200">Python</span>
+                    </div>
+                    <div class="flex items-center gap-4 p-4 rounded-xl border border-cyan-500/20 bg-cyan-500/10 transition-all hover:scale-[1.02]">
+                        <div class="text-cyan-400"><i data-lucide="database"></i></div>
+                        <span class="font-bold text-lg text-slate-200">SQL</span>
+                    </div>
+                    <div class="flex items-center gap-4 p-4 rounded-xl border border-yellow-500/20 bg-yellow-500/10 transition-all hover:scale-[1.02]">
+                        <div class="text-yellow-400"><i data-lucide="bar-chart-3"></i></div>
+                        <span class="font-bold text-lg text-slate-200">Power BI</span>
+                    </div>
+                    <div class="flex items-center gap-4 p-4 rounded-xl border border-green-500/20 bg-green-500/10 transition-all hover:scale-[1.02]">
+                        <div class="text-green-400"><i data-lucide="file-spreadsheet"></i></div>
+                        <span class="font-bold text-lg text-slate-200">Excel / VBA</span>
+                    </div>
+                    <div class="flex items-center gap-4 p-4 rounded-xl border border-purple-500/20 bg-purple-500/10 transition-all hover:scale-[1.02]">
+                        <div class="text-purple-400"><i data-lucide="arrow-left-right"></i></div>
+                        <span class="font-bold text-lg text-slate-200">ETL & Data Prep</span>
+                    </div>
+                    <div class="flex items-center gap-4 p-4 rounded-xl border border-indigo-500/20 bg-indigo-500/10 transition-all hover:scale-[1.02]">
+                        <div class="text-indigo-400"><i data-lucide="code-2"></i></div>
+                        <span class="font-bold text-lg text-slate-200">R / RShiny</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Python Eco -->
+                    <div class="bg-slate-900/50 p-6 rounded-xl border border-slate-800">
+                        <h3 class="text-xl font-semibold text-blue-400 flex items-center gap-2 mb-6">
+                            <i data-lucide="terminal" class="w-5 h-5"></i> <span data-i18n="skill_py_eco">Écosystème Python</span>
+                        </h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 text-sm">Pandas</span>
+                            <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 text-sm">NumPy</span>
+                            <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 text-sm">Dash</span>
+                            <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 text-sm">Plotly</span>
+                            <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 text-sm">Selenium</span>
+                            <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 text-sm">Playwright</span>
+                        </div>
+                    </div>
+
+                    <!-- Tools -->
+                    <div class="bg-slate-900/50 p-6 rounded-xl border border-slate-800">
+                        <h3 class="text-xl font-semibold text-purple-400 flex items-center gap-2 mb-6">
+                            <i data-lucide="database" class="w-5 h-5"></i> <span data-i18n="skill_tools">Outils & IDE</span>
+                        </h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 text-sm">VS Code</span>
+                            <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 text-sm">Spyder</span>
+                            <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 text-sm">Google Colab</span>
+                            <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 text-sm">Git</span>
+                            <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 text-sm">Apache Hop</span>
+                            <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 text-sm">Power Query</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer Skills -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-8 border-t border-slate-800">
+                    <div>
+                        <h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center gap-2">
+                            <i data-lucide="brain-circuit" class="w-4 h-4"></i> Soft Skills
+                        </h3>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div> <span data-i18n="soft_learn">Apprentissage rapide</span></li>
+                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div> <span data-i18n="soft_team">Esprit d'équipe</span></li>
+                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div> <span data-i18n="soft_adapt">Adaptabilité</span></li>
+                            <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div> <span data-i18n="soft_comm">Communication</span></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-pink-400 mb-4 flex items-center gap-2">
+                            <i data-lucide="palette" class="w-4 h-4"></i> <span data-i18n="skill_creative">Créatif</span>
+                        </h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 bg-pink-900/10 border border-pink-900/30 text-pink-300 rounded text-xs">Premiere Pro</span>
+                            <span class="px-2 py-1 bg-pink-900/10 border border-pink-900/30 text-pink-300 rounded text-xs">Photoshop</span>
+                            <span class="px-2 py-1 bg-pink-900/10 border border-pink-900/30 text-pink-300 rounded text-xs">Illustrator</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-white mb-4" data-i18n="skill_lang">Langues</h3>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between p-2 bg-slate-900 rounded border border-slate-800">
+                                <span class="text-slate-400" data-i18n="lang_fr">Français</span><span class="text-white font-medium" data-i18n="lang_fr_lvl">Bilingue</span>
+                            </div>
+                            <div class="flex justify-between p-2 bg-slate-900 rounded border border-slate-800">
+                                <span class="text-slate-400" data-i18n="lang_en">Anglais</span><span class="text-white font-medium" data-i18n="lang_en_lvl">Courant</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: ABOUT -->
+        <div id="about" class="tab-content animate-fade-in">
+            <div class="max-w-3xl mx-auto">
+                <div class="bg-slate-900/50 border border-slate-800 p-8 rounded-2xl mb-12 text-center md:text-left">
+                    <h2 class="text-3xl font-bold text-white mb-4" data-i18n="about_title">À propos de moi</h2>
+                    <p class="text-slate-300 leading-relaxed text-lg" data-i18n="about_text">
+                        Je suis actuellement étudiant en <span class="text-blue-400 font-semibold">2ème année de BUT Science des Données</span> à l'IUT de Metz. 
+                        Passionné par l'informatique et les statistiques, je cherche à appliquer mes compétences en traitement de données et développement.
+                    </p>
+                </div>
+
+                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                    <span class="w-8 h-1 bg-blue-500 rounded-full"></span> <span data-i18n="about_path">Mon Parcours</span>
+                </h3>
+
+                <div class="relative border-l-2 border-slate-800 ml-3 md:ml-6 space-y-12 pb-12">
+                    <!-- Item 1 -->
+                    <div class="relative pl-8 md:pl-12">
+                        <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 bg-emerald-500 border-emerald-900 shadow-xl shadow-emerald-500/20"></div>
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
+                            <h3 class="text-xl font-bold text-white" data-i18n="path_but_title">BUT Science des Données</h3>
+                            <span class="text-sm font-mono text-slate-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700">2024 - 2027</span>
+                        </div>
+                        <div class="text-lg font-medium mb-3 flex items-center gap-2 text-emerald-400">
+                            <i data-lucide="graduation-cap" class="w-4 h-4"></i> IUT de Metz
+                        </div>
+                        <p class="text-slate-400 leading-relaxed bg-slate-900/50 p-4 rounded-lg border border-slate-800/50" data-i18n="path_but_desc">Formation intensive en statistiques, programmation (Python, R, SQL) et BI.</p>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="relative pl-8 md:pl-12">
+                        <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 bg-blue-500 border-blue-900 shadow-xl shadow-blue-500/20"></div>
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
+                            <h3 class="text-xl font-bold text-white" data-i18n="path_job_title">Manager</h3>
+                            <span class="text-sm font-mono text-slate-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700" data-i18n="path_job_date">Oct 2023 - Présent</span>
+                        </div>
+                        <div class="text-lg font-medium mb-3 flex items-center gap-2 text-blue-400">
+                            <i data-lucide="briefcase" class="w-4 h-4"></i> Pizza Hut
+                        </div>
+                        <p class="text-slate-400 leading-relaxed bg-slate-900/50 p-4 rounded-lg border border-slate-800/50" data-i18n="path_job_desc">Gestion d'équipe, comptabilité journalière et résolution de problèmes opérationnels.</p>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="relative pl-8 md:pl-12">
+                        <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 bg-emerald-500 border-emerald-900 shadow-xl shadow-emerald-500/20"></div>
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
+                            <h3 class="text-xl font-bold text-white" data-i18n="path_bac_title">Baccalauréat International</h3>
+                            <span class="text-sm font-mono text-slate-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700">2022 - 2023</span>
+                        </div>
+                        <div class="text-lg font-medium mb-3 flex items-center gap-2 text-emerald-400">
+                            <i data-lucide="graduation-cap" class="w-4 h-4"></i> Lycée El Khalid 2
+                        </div>
+                        <p class="text-slate-400 leading-relaxed bg-slate-900/50 p-4 rounded-lg border border-slate-800/50" data-i18n="path_bac_desc">Série scientifique, mention Bien.</p>
+                    </div>
+                </div>
+
+                <div class="mt-8 p-8 bg-gradient-to-r from-blue-900/20 to-slate-900 rounded-2xl border border-slate-800 text-center">
+                    <h3 class="text-xl font-semibold text-white mb-4" data-i18n="contact_title">Un projet ou une opportunité ?</h3>
+                    <div class="flex flex-col md:flex-row justify-center gap-4">
+                        <a href="mailto:imranelahrib2017@gmail.com" class="flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
+                            <i data-lucide="mail" class="w-4 h-4"></i> <span data-i18n="btn_email">Me contacter</span>
+                        </a>
+                        <a href="tel:+33765809495" class="flex items-center justify-center gap-2 px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-colors border border-slate-700">
+                            <i data-lucide="phone" class="w-4 h-4"></i> +33 7 65 80 94 95
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="border-t border-slate-900 py-8 bg-slate-950 mt-auto">
+        <div class="max-w-6xl mx-auto px-4 text-center text-slate-500 text-sm">
+            <p>© 2025 Imrane Larhrib - Portfolio Data Science</p>
+        </div>
+    </footer>
+
+    <!-- MODAL FOR PROJECTS -->
+    <div id="project-modal" class="modal fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-sm hidden">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl relative">
+            
+            <!-- Close Button -->
+            <button onclick="closeModal()" class="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black/80 rounded-full text-white transition-colors">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <!-- Scrollable Content -->
+            <div class="overflow-y-auto p-6 md:p-8 custom-scrollbar">
+                
+                <!-- Content (Dynamic) -->
+                <div id="modal-content">
+                    <!-- Default Content -->
+                    <h2 class="text-3xl font-bold text-white mb-2" id="modal-title">Project Title</h2>
+                    <p class="text-blue-400 mb-6" id="modal-subtitle">Subtitle</p>
+                    
+                    <!-- Slider Container -->
+                    <div class="relative aspect-video bg-slate-950 rounded-xl overflow-hidden border border-slate-800 mb-6 group">
+                        <img id="modal-img" src="" alt="Project Image" class="w-full h-full object-contain bg-slate-950">
+                        <div id="modal-placeholder" class="hidden absolute inset-0 flex items-center justify-center bg-slate-800 text-slate-500 flex-col gap-2">
+                            <i data-lucide="image-off" class="w-12 h-12"></i>
+                            <span data-i18n="modal_no_img">Image non disponible</span>
+                        </div>
+                        
+                        <!-- Navigation Buttons -->
+                        <button onclick="prevSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-black/50 hover:bg-blue-600 rounded-full text-white opacity-0 group-hover:opacity-100 transition-all">
+                            <i data-lucide="chevron-left" class="w-6 h-6"></i>
+                        </button>
+                        <button onclick="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-black/50 hover:bg-blue-600 rounded-full text-white opacity-0 group-hover:opacity-100 transition-all">
+                            <i data-lucide="chevron-right" class="w-6 h-6"></i>
+                        </button>
+
+                        <!-- Dots Indicator -->
+                        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2" id="slider-dots">
+                            <!-- Dots generated by JS -->
+                        </div>
+                    </div>
+
+                    <div class="prose prose-invert max-w-none">
+                        <p class="text-slate-300 text-lg leading-relaxed mb-6" id="modal-desc">
+                            Description...
+                        </p>
+                        
+                        <!-- POINTS CLÉS SECTION -->
+                        <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 mb-6">
+                            <h4 class="text-white font-semibold mb-4 flex items-center gap-2">
+                                <i data-lucide="check-circle-2" class="text-blue-500 w-5 h-5"></i> <span data-i18n="modal_points">Points Clés & Réalisations</span>
+                            </h4>
+                            <ul class="modal-points text-slate-300 space-y-2" id="modal-points">
+                                <!-- Points generated by JS -->
+                            </ul>
+                        </div>
+
+                        <div class="flex flex-wrap gap-2" id="modal-tags">
+                            <!-- Tags generated by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // -------------------------
+        // INTERNATIONALIZATION (i18n)
+        // -------------------------
+        const translations = {
+            fr: {
+                nav_home: "Accueil",
+                nav_about: "À propos",
+                nav_projects: "Projets",
+                nav_skills: "Compétences",
+                home_avail: "Disponible à partir d'Avril (10 semaines)",
+                home_hi: "Bonjour, je suis",
+                home_role: "Étudiant en 2ème année BUT Science des Données à l'IUT de Metz",
+                home_desc: "Passionné par la data, je transforme les données brutes en solutions concrètes grâce à Python, SQL et la Dataviz.",
+                btn_projects: "Voir mes projets",
+                btn_cv: "Télécharger CV",
+                proj_title: "Projets Réalisés",
+                proj_sub: "Une sélection de mes travaux académiques et personnels",
+                skill_title: "Compétences Techniques",
+                skill_sub: "Ma stack technique complète",
+                skill_py_eco: "Écosystème Python",
+                skill_tools: "Outils & IDE",
+                soft_learn: "Apprentissage rapide",
+                soft_team: "Esprit d'équipe",
+                soft_adapt: "Adaptabilité",
+                soft_comm: "Communication",
+                skill_creative: "Créatif",
+                skill_lang: "Langues",
+                lang_fr: "Français",
+                lang_fr_lvl: "Bilingue",
+                lang_en: "Anglais",
+                lang_en_lvl: "Courant",
+                about_title: "À propos de moi",
+                about_text: "Je suis actuellement étudiant en <span class='text-blue-400 font-semibold'>2ème année de BUT Science des Données</span> à l'IUT de Metz. Passionné par l'informatique et les statistiques, je cherche à appliquer mes compétences en traitement de données et développement.",
+                about_path: "Mon Parcours",
+                path_but_title: "BUT Science des Données",
+                path_but_desc: "Formation intensive en statistiques, programmation (Python, R, SQL) et BI.",
+                path_job_title: "Manager",
+                path_job_date: "Oct 2023 - Présent",
+                path_job_desc: "Gestion d'équipe, comptabilité journalière et résolution de problèmes opérationnels.",
+                path_bac_title: "Baccalauréat International",
+                path_bac_desc: "Série scientifique, mention Bien.",
+                contact_title: "Un projet ou une opportunité ?",
+                btn_email: "Me contacter",
+                modal_no_img: "Image non disponible",
+                modal_points: "Points Clés & Réalisations",
+                // Project cards short text
+                p_ecom_title: "Analyse E-commerce & Dashboard",
+                p_ecom_short: "Extraction automatisée et analyse comparative.",
+                p_data_title: "Challenge National Dataviz",
+                p_data_short: "Infographie primée sur la déscolarisation.",
+                p_immo_title: "Gestion Immobilière",
+                p_immo_short: "Application métier complète pour gérer biens et visites.",
+                p_bdd_title: "Conception Base de Données",
+                p_bdd_short: "Conception MCD et implémentation relationnelle.",
+                p_scrap_title: "Web Scraping Pipeline",
+                p_scrap_short: "Collecte et structuration automatisée de données.",
+                p_quiz_title: "Quiz Interactif IA",
+                p_quiz_short: "Application web avec correction via LLM.",
+                p_wh_title: "Data Warehouse Associatif",
+                p_wh_short: "Mise en place d'un entrepôt de données complet."
+            },
+            en: {
+                nav_home: "Home",
+                nav_about: "About",
+                nav_projects: "Projects",
+                nav_skills: "Skills",
+                home_avail: "Available from April (10 weeks)",
+                home_hi: "Hello, I am",
+                home_role: "2nd Year Data Science Student at IUT Metz",
+                home_desc: "Passionate about data, I transform raw data into concrete solutions using Python, SQL, and Dataviz.",
+                btn_projects: "View my projects",
+                btn_cv: "Download CV",
+                proj_title: "Realized Projects",
+                proj_sub: "A selection of my academic and personal work",
+                skill_title: "Technical Skills",
+                skill_sub: "My complete technical stack",
+                skill_py_eco: "Python Ecosystem",
+                skill_tools: "Tools & IDE",
+                soft_learn: "Fast Learner",
+                soft_team: "Team Spirit",
+                soft_adapt: "Adaptability",
+                soft_comm: "Communication",
+                skill_creative: "Creative",
+                skill_lang: "Languages",
+                lang_fr: "French",
+                lang_fr_lvl: "Bilingual",
+                lang_en: "English",
+                lang_en_lvl: "Fluent",
+                about_title: "About Me",
+                about_text: "I am currently a <span class='text-blue-400 font-semibold'>2nd-year Data Science student</span> at IUT Metz. Passionate about computer science and statistics, I am looking to apply my skills in data processing and development.",
+                about_path: "My Journey",
+                path_but_title: "BUT Data Science",
+                path_but_desc: "Intensive training in statistics, programming (Python, R, SQL), and BI.",
+                path_job_title: "Manager",
+                path_job_date: "Oct 2023 - Present",
+                path_job_desc: "Team management, daily accounting, and operational problem solving.",
+                path_bac_title: "International Baccalaureate",
+                path_bac_desc: "Scientific series, with honors.",
+                contact_title: "A project or opportunity?",
+                btn_email: "Contact me",
+                modal_no_img: "Image not available",
+                modal_points: "Key Points & Achievements",
+                // Project cards short text
+                p_ecom_title: "E-commerce Analysis & Dashboard",
+                p_ecom_short: "Automated extraction and comparative analysis.",
+                p_data_title: "National Dataviz Challenge",
+                p_data_short: "Award-winning infographic on school dropout rates.",
+                p_immo_title: "Real Estate Management",
+                p_immo_short: "Complete business app for managing properties and visits.",
+                p_bdd_title: "Database Design",
+                p_bdd_short: "MCD design and relational implementation.",
+                p_scrap_title: "Web Scraping Pipeline",
+                p_scrap_short: "Automated data collection and structuring.",
+                p_quiz_title: "Interactive AI Quiz",
+                p_quiz_short: "Web app with LLM-based correction.",
+                p_wh_title: "Associative Data Warehouse",
+                p_wh_short: "Implementation of a complete data warehouse."
+            }
+        };
+
+        // Data for Projects (BILINGUAL)
+        const projectsData = {
+            'ecommerce': {
+                title: { fr: "Analyse E-commerce & Dashboard", en: "E-commerce Analysis & Dashboard" },
+                subtitle: { fr: "Leclerc & Power BI - Analyse comparative", en: "Leclerc & Power BI - Comparative Analysis" },
+                desc: { 
+                    fr: "Ce projet vise à analyser les stratégies de prix et de stocks de plusieurs magasins E.Leclerc. J'ai développé un script de Web Scraping robuste avec Python (Playwright) pour extraire les données, puis conçu un Dashboard Power BI interactif permettant de visualiser les écarts de prix par catégorie, la disponibilité des produits et de cartographier les points de vente.",
+                    en: "This project aims to analyze the pricing and stock strategies of several E.Leclerc stores. I developed a robust Web Scraping script with Python (Playwright) to extract data, then designed an interactive Power BI Dashboard to visualize price differences by category, product availability, and map sales points."
+                },
+                points: {
+                    fr: [
+                        "Développement de scripts de scraping avec Playwright pour extraire les données dynamiques.",
+                        "Nettoyage et structuration des données avec la librairie Pandas.",
+                        "Création de mesures DAX complexes pour calculer les écarts types et les moyennes pondérées.",
+                        "Visualisation géographique des magasins et analyse par catégorie de produits."
+                    ],
+                    en: [
+                        "Development of scraping scripts with Playwright to extract dynamic data.",
+                        "Cleaning and structuring data with the Pandas library.",
+                        "Creation of complex DAX measures to calculate standard deviations and weighted averages.",
+                        "Geographic visualization of stores and analysis by product category."
+                    ]
+                },
+                images: ["images/ecommerce1.png", "images/ecommerce2.png"],
+                tags: ["Python", "Playwright", "Power BI", "Data Analysis", "Web Scraping"]
+            },
+            'dataviz': {
+                title: { fr: "Challenge National Dataviz", en: "National Dataviz Challenge" },
+                subtitle: { fr: "INSEE & Open Data - Visualisation Storytelling", en: "INSEE & Open Data - Visual Storytelling" },
+                desc: {
+                    fr: "Participation au challenge national organisé par l'INSEE. L'objectif était de raconter une histoire à partir de données ouvertes complexes concernant la déscolarisation des jeunes (15-29 ans) en France.",
+                    en: "Participation in the national challenge organized by INSEE. The goal was to tell a story using complex open data regarding school dropouts among young people (15-29 years old) in France."
+                },
+                points: {
+                    fr: [
+                        "Intégration et croisement de multiples jeux de données Open Data.",
+                        "Design d'une interface Power BI axée sur le Storytelling (navigation fluide, scénario).",
+                        "Identification des facteurs clés influençant la déscolarisation.",
+                        "Obtention de la meilleure note de la promotion pour la qualité de l'analyse."
+                    ],
+                    en: [
+                        "Integration and crossing of multiple Open Data sets.",
+                        "Design of a Power BI interface focused on Storytelling (fluid navigation, scenario).",
+                        "Identification of key factors influencing school dropouts.",
+                        "Obtained the best grade in the class for the quality of the analysis."
+                    ]
+                },
+                images: ["images/dataviz_1.png", "images/dataviz_2.png"],
+                tags: ["Power BI", "Storytelling", "Open Data", "INSEE"]
+            },
+            'immo': {
+                title: { fr: "Gestion Immobilière", en: "Real Estate Management" },
+                subtitle: { fr: "Application Métier Excel/VBA", en: "Excel/VBA Business Application" },
+                desc: {
+                    fr: "Développement d'une application complète pour une agence immobilière permettant de gérer l'intégralité du processus de vente et de location, de la prise de mandat à la signature du compromis.",
+                    en: "Development of a complete application for a real estate agency to manage the entire sales and rental process, from mandate taking to signing the agreement."
+                },
+                points: {
+                    fr: [
+                        "Conception d'une base de données relationnelle (Biens, Clients, Visites).",
+                        "Création d'UserForms ergonomiques pour la saisie et la consultation des données.",
+                        "Développement d'un module de planning interactif (Drag & Drop simulé) pour les visites.",
+                        "Automatisation de la génération de documents (fiches biens, bons de visite)."
+                    ],
+                    en: [
+                        "Design of a relational database (Properties, Clients, Visits).",
+                        "Creation of ergonomic UserForms for data entry and consultation.",
+                        "Development of an interactive schedule module (simulated Drag & Drop) for visits.",
+                        "Automation of document generation (property sheets, visit vouchers)."
+                    ]
+                },
+                images: ["images/immo_1.png", "images/immo_2.png"],
+                tags: ["VBA", "Excel", "UserForm", "Base de Données", "Automatisation"]
+            },
+            'bdd': {
+                title: { fr: "Conception Base de Données (SAE)", en: "Database Design (SAE)" },
+                subtitle: { fr: "MS Access & Looping - Gestion de Données", en: "MS Access & Looping - Data Management" },
+                desc: {
+                    fr: "Projet académique complet (SAE) de conception et d'implémentation d'une base de données relationnelle. Le projet couvre tout le cycle de vie, de la modélisation conceptuelle à l'implémentation physique et l'automatisation de l'interface utilisateur.",
+                    en: "Complete academic project (SAE) for the design and implementation of a relational database. The project covers the entire lifecycle, from conceptual modeling to physical implementation and user interface automation."
+                },
+                points: {
+                    fr: [
+                        "Réalisation d’un MCD (Modèle Conceptuel de Données) avec Looping.",
+                        "Mise en place de la base de données relationnelle sous MS Access.",
+                        "Création d’une interface utilisateur intuitive (formulaires, états, navigation) et intégration d’un jeu de données de test.",
+                        "Utilisation de VBA pour automatiser les fonctionnalités complexes et la navigation.",
+                        "Rédaction d’une documentation utilisateur complète et présentation orale."
+                    ],
+                    en: [
+                        "Creation of an MCD (Conceptual Data Model) with Looping.",
+                        "Implementation of the relational database in MS Access.",
+                        "Creation of an intuitive user interface (forms, reports, navigation) and integration of a test dataset.",
+                        "Use of VBA to automate complex functionalities and navigation.",
+                        "Drafting of complete user documentation and oral presentation."
+                    ]
+                },
+                images: ["images/bdd_1.png", "images/bdd_2.png"],
+                tags: ["MS Access", "VBA", "Looping", "SQL", "MCD"]
+            },
+            'scraping': {
+                title: { fr: "Web Scraping Pipeline", en: "Web Scraping Pipeline" },
+                subtitle: { fr: "WiziPet - Collecte de Données Produits", en: "WiziPet - Product Data Collection" },
+                desc: {
+                    fr: "Mise en place d'un pipeline d'extraction de données pour constituer une base de produits animaliers (Chiens & Chats) à partir de sites e-commerce, en respectant les contraintes techniques et éthiques.",
+                    en: "Implementation of a data extraction pipeline to build a database of pet products (Dogs & Cats) from e-commerce sites, respecting technical and ethical constraints."
+                },
+                points: {
+                    fr: [
+                        "Utilisation de Selenium et Playwright pour contourner les protections anti-bot.",
+                        "Gestion des délais et des user-agents pour simuler un comportement humain.",
+                        "Nettoyage automatique des données (Regex) et export structuré en CSV.",
+                        "Respect des fichiers robots.txt et des bonnes pratiques de scraping."
+                    ],
+                    en: [
+                        "Use of Selenium and Playwright to bypass anti-bot protections.",
+                        "Management of delays and user-agents to simulate human behavior.",
+                        "Automatic data cleaning (Regex) and structured export to CSV.",
+                        "Adherence to robots.txt files and scraping best practices."
+                    ]
+                },
+                images: ["images/scraping_1.png", "images/scraping_2.png"],
+                tags: ["Python", "Selenium", "Pandas", "Beautiful Soup", "Data Engineering"]
+            },
+            'quiz': {
+                title: { fr: "Quiz Interactif IA", en: "Interactive AI Quiz" },
+                subtitle: { fr: "Application Web Éducative", en: "Educational Web Application" },
+                desc: {
+                    fr: "Développement d'une plateforme d'apprentissage interactive permettant aux étudiants de tester leurs connaissances avec une correction intelligente des réponses ouvertes.",
+                    en: "Development of an interactive learning platform allowing students to test their knowledge with intelligent correction of open-ended answers."
+                },
+                points: {
+                    fr: [
+                        "Architecture orientée objet (POO) pour la gestion des utilisateurs et des questions.",
+                        "Interface utilisateur réactive développée avec Dash et Plotly.",
+                        "Intégration d'une API LLM pour l'analyse sémantique et la correction des réponses textuelles.",
+                        "Visualisation en temps réel des scores et de la progression."
+                    ],
+                    en: [
+                        "Object-oriented architecture (OOP) for managing users and questions.",
+                        "Reactive user interface developed with Dash and Plotly.",
+                        "Integration of an LLM API for semantic analysis and correction of text answers.",
+                        "Real-time visualization of scores and progress."
+                    ]
+                },
+                images: ["images/quiz_1.png", "images/quiz_2.png"],
+                tags: ["Python", "Dash", "Plotly", "LLM", "POO"]
+            },
+            'warehouse': {
+                title: { fr: "Data Warehouse Associatif", en: "Associative Data Warehouse" },
+                subtitle: { fr: "ETL & Business Intelligence", en: "ETL & Business Intelligence" },
+                desc: {
+                    fr: "Projet de Business Intelligence complet visant à analyser le tissu associatif français (Loi 1901). Mise en place de toute la chaîne de valeur de la donnée, de l'extraction à la visualisation.",
+                    en: "Complete Business Intelligence project aimed at analyzing the French associative fabric (Law 1901). Implementation of the entire data value chain, from extraction to visualization."
+                },
+                points: {
+                    fr: [
+                        "Conception de pipelines ETL complexes avec Apache Hop.",
+                        "Modélisation de l'entrepôt de données (Schéma en étoile/flocon).",
+                        "Gestion de la qualité des données et historisation.",
+                        "Documentation technique détaillée pour la maintenance."
+                    ],
+                    en: [
+                        "Design of complex ETL pipelines with Apache Hop.",
+                        "Data warehouse modeling (Star/Snowflake schema).",
+                        "Data quality management and historicization.",
+                        "Detailed technical documentation for maintenance."
+                    ]
+                },
+                images: ["images/warehouse_1.png", "images/warehouse_2.png"],
+                tags: ["Apache Hop", "ETL", "SQL", "Data Modeling", "BI"]
+            }
+        };
+
+        // State variables
+        let currentImageIndex = 0;
+        let currentProjectId = null;
+        let currentLang = 'fr';
+
+        // LANGUAGE SWITCHING LOGIC
+        function toggleLanguage() {
+            currentLang = currentLang === 'fr' ? 'en' : 'fr';
+            document.getElementById('lang-display').innerText = currentLang.toUpperCase();
+            updatePageContent();
+        }
+
+        function updatePageContent() {
+            // Update static elements
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    // Handle HTML content for specific keys if needed
+                    if (key === 'about_text' || key === 'home_hi') {
+                        el.innerHTML = translations[currentLang][key];
+                    } else {
+                        el.innerText = translations[currentLang][key];
+                    }
+                }
+            });
+        }
+
+        // Open Modal
+        function openModal(projectId) {
+            const project = projectsData[projectId];
+            if (!project) return;
+
+            currentProjectId = projectId;
+            currentImageIndex = 0;
+
+            // Fill Content (based on current Language)
+            document.getElementById('modal-title').innerText = project.title[currentLang];
+            document.getElementById('modal-subtitle').innerText = project.subtitle[currentLang];
+            document.getElementById('modal-desc').innerText = project.desc[currentLang];
+            
+            // Fill Bullet Points (based on current Language)
+            const pointsContainer = document.getElementById('modal-points');
+            pointsContainer.innerHTML = project.points[currentLang].map(point => 
+                `<li>${point}</li>`
+            ).join('');
+            
+            // Update Tags (Language agnostic usually, but could be translated if needed)
+            const tagsContainer = document.getElementById('modal-tags');
+            tagsContainer.innerHTML = project.tags.map(tag => 
+                `<span class="px-3 py-1 text-sm rounded-full bg-slate-800 text-blue-300 border border-slate-700">${tag}</span>`
+            ).join('');
+
+            // Update Image
+            updateSlider();
+
+            // Show Modal
+            const modal = document.getElementById('project-modal');
+            modal.classList.remove('hidden');
+            // Trigger reflow for transition
+            void modal.offsetWidth; 
+            modal.classList.add('open');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        // Close Modal
+        function closeModal() {
+            const modal = document.getElementById('project-modal');
+            modal.classList.remove('open');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 300); // Match transition duration
+        }
+
+        // Slider Logic
+        function updateSlider() {
+            if (!currentProjectId) return;
+            const images = projectsData[currentProjectId].images;
+            const imgElement = document.getElementById('modal-img');
+            const placeholder = document.getElementById('modal-placeholder');
+            
+            // Reset visibility states
+            imgElement.classList.remove('hidden');
+            placeholder.classList.add('hidden');
+
+            // Set source
+            imgElement.src = images[currentImageIndex];
+            
+            // Handle load errors gracefully without destroying the element
+            imgElement.onerror = function() {
+                this.classList.add('hidden');
+                placeholder.classList.remove('hidden');
+                lucide.createIcons();
+            };
+
+            // Update Dots
+            const dotsContainer = document.getElementById('slider-dots');
+            dotsContainer.innerHTML = images.map((_, idx) => 
+                `<div class="w-2 h-2 rounded-full transition-all ${idx === currentImageIndex ? 'bg-blue-500 w-4' : 'bg-white/50'}"></div>`
+            ).join('');
+        }
+
+        function nextSlide() {
+            if (!currentProjectId) return;
+            const total = projectsData[currentProjectId].images.length;
+            currentImageIndex = (currentImageIndex + 1) % total;
+            updateSlider();
+        }
+
+        function prevSlide() {
+            if (!currentProjectId) return;
+            const total = projectsData[currentProjectId].images.length;
+            currentImageIndex = (currentImageIndex - 1 + total) % total;
+            updateSlider();
+        }
+
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if(btn.dataset.tab === tabId) {
+                    btn.classList.add('bg-blue-600', 'text-white', 'shadow-lg', 'shadow-blue-500/30');
+                    btn.classList.remove('text-slate-400', 'hover:text-white', 'hover:bg-slate-800');
+                } else {
+                    btn.classList.remove('bg-blue-600', 'text-white', 'shadow-lg', 'shadow-blue-500/30');
+                    btn.classList.add('text-slate-400', 'hover:text-white', 'hover:bg-slate-800');
+                }
+            });
+
+            const mobileMenu = document.getElementById('mobile-menu');
+            if(!mobileMenu.classList.contains('hidden')) {
+                toggleMenu();
+            }
+            
+            const activeContent = document.getElementById(tabId);
+            activeContent.classList.remove('animate-fade-in');
+            void activeContent.offsetWidth;
+            activeContent.classList.add('animate-fade-in');
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            menu.classList.toggle('hidden');
+            
+            if(menu.classList.contains('hidden')) {
+                icon.setAttribute('data-lucide', 'menu');
+            } else {
+                icon.setAttribute('data-lucide', 'x');
+            }
+            lucide.createIcons();
+        }
+
+        // Init default
+        switchTab('home');
+        document.getElementById('project-modal').classList.add('hidden');
+    </script>
+</body>
+</html>
