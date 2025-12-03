@@ -80,7 +80,7 @@
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
                 <div class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent cursor-pointer" onclick="switchTab('home')">
-                    IL.Data
+                    PORTFOLIO
                 </div>
 
                 <div class="flex items-center gap-4">
@@ -157,7 +157,7 @@
                     </div>
 
                     <div class="flex items-center gap-6 pt-8 text-slate-500">
-                        <a href="https://k4m4ro.github.io/portfolio/" target="_blank" class="hover:text-blue-400 hover:-translate-y-1 transition-all"><i data-lucide="github" class="w-6 h-6"></i></a>
+                        <a href="https://github.com/k4m4ro" target="_blank" class="hover:text-blue-400 hover:-translate-y-1 transition-all"><i data-lucide="github" class="w-6 h-6"></i></a>
                         <a href="https://www.linkedin.com/in/imrane-larhrib-00a730296/" target="_blank" class="hover:text-blue-400 hover:-translate-y-1 transition-all"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
                         <a href="mailto:imranelahrib2017@gmail.com" class="hover:text-blue-400 hover:-translate-y-1 transition-all"><i data-lucide="mail" class="w-6 h-6"></i></a>
                     </div>
@@ -180,7 +180,6 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Project Cards (Generated via JS or static) -->
                 <!-- Project 1 -->
                 <div onclick="openModal('ecommerce')" class="group bg-slate-900 border border-slate-800 hover:border-blue-500/50 rounded-xl p-6 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-900/10 hover:-translate-y-1 flex flex-col h-full cursor-pointer relative overflow-hidden">
                     <div class="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity text-blue-400"><i data-lucide="maximize-2" class="w-5 h-5"></i></div>
@@ -223,7 +222,7 @@
                     </div>
                 </div>
 
-                <!-- Project 4 -->
+                <!-- Project 4 (Corrected Style) -->
                 <div onclick="openModal('bdd')" class="group bg-slate-900 border border-slate-800 hover:border-blue-500/50 rounded-xl p-6 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-900/10 hover:-translate-y-1 flex flex-col h-full cursor-pointer relative overflow-hidden">
                     <div class="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity text-blue-400"><i data-lucide="maximize-2" class="w-5 h-5"></i></div>
                     <div class="flex justify-between items-start mb-4"><div class="p-3 rounded-lg bg-indigo-500/10 text-indigo-400"><i data-lucide="database-backup"></i></div></div>
@@ -330,6 +329,7 @@
                             <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 text-sm">Plotly</span>
                             <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 text-sm">Selenium</span>
                             <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 text-sm">Playwright</span>
+                            <span class="px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 text-sm">Beautiful Soup</span>
                         </div>
                     </div>
 
@@ -361,6 +361,15 @@
                             <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div> <span data-i18n="soft_adapt">Adaptabilité</span></li>
                             <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div> <span data-i18n="soft_comm">Communication</span></li>
                         </ul>
+                        <!-- RGPD Section -->
+                        <div class="mt-6">
+                             <h4 class="text-md font-semibold text-white mb-2 flex items-center gap-2">
+                                <i data-lucide="shield-check" class="w-4 h-4 text-slate-400"></i> <span data-i18n="norm_title">Normes & Réglementation</span>
+                            </h4>
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-1 bg-slate-800 border border-slate-700 text-slate-300 rounded text-xs">RGPD</span>
+                            </div>
+                        </div>
                     </div>
                     <div>
                         <h3 class="text-lg font-semibold text-pink-400 mb-4 flex items-center gap-2">
@@ -379,7 +388,10 @@
                                 <span class="text-slate-400" data-i18n="lang_fr">Français</span><span class="text-white font-medium" data-i18n="lang_fr_lvl">Bilingue</span>
                             </div>
                             <div class="flex justify-between p-2 bg-slate-900 rounded border border-slate-800">
-                                <span class="text-slate-400" data-i18n="lang_en">Anglais</span><span class="text-white font-medium" data-i18n="lang_en_lvl">Courant</span>
+                                <span class="text-slate-400" data-i18n="lang_en">Anglais</span><span class="text-white font-medium" data-i18n="lang_en_lvl">Avancé</span>
+                            </div>
+                            <div class="flex justify-between p-2 bg-slate-900 rounded border border-slate-800">
+                                <span class="text-slate-400" data-i18n="lang_ar">Arabe</span><span class="text-white font-medium" data-i18n="lang_ar_lvl">Bilingue</span>
                             </div>
                         </div>
                     </div>
@@ -558,12 +570,15 @@
                 soft_team: "Esprit d'équipe",
                 soft_adapt: "Adaptabilité",
                 soft_comm: "Communication",
+                norm_title: "Normes & Réglementation",
                 skill_creative: "Créatif",
                 skill_lang: "Langues",
                 lang_fr: "Français",
                 lang_fr_lvl: "Bilingue",
+                lang_ar: "Arabe",
+                lang_ar_lvl: "Bilingue",
                 lang_en: "Anglais",
-                lang_en_lvl: "Courant",
+                lang_en_lvl: "Avancé",
                 about_title: "À propos de moi",
                 about_text: "Je suis actuellement étudiant en <span class='text-blue-400 font-semibold'>2ème année de BUT Science des Données</span> à l'IUT de Metz. Passionné par l'informatique et les statistiques, je cherche à appliquer mes compétences en traitement de données et développement.",
                 about_path: "Mon Parcours",
@@ -615,12 +630,15 @@
                 soft_team: "Team Spirit",
                 soft_adapt: "Adaptability",
                 soft_comm: "Communication",
+                norm_title: "Standards & Regulations",
                 skill_creative: "Creative",
                 skill_lang: "Languages",
                 lang_fr: "French",
                 lang_fr_lvl: "Bilingual",
+                lang_ar: "Arabic",
+                lang_ar_lvl: "Bilingual",
                 lang_en: "English",
-                lang_en_lvl: "Fluent",
+                lang_en_lvl: "Advanced",
                 about_title: "About Me",
                 about_text: "I am currently a <span class='text-blue-400 font-semibold'>2nd-year Data Science student</span> at IUT Metz. Passionate about computer science and statistics, I am looking to apply my skills in data processing and development.",
                 about_path: "My Journey",
@@ -700,7 +718,7 @@
                         "Obtained the best grade in the class for the quality of the analysis."
                     ]
                 },
-                images: ["images/dataviz_1.png", "images/dataviz_2.png"],
+                images: ["images/dataviz_1.png"],
                 tags: ["Power BI", "Storytelling", "Open Data", "INSEE"]
             },
             'immo': {
@@ -774,7 +792,7 @@
                         "Adherence to robots.txt files and scraping best practices."
                     ]
                 },
-                images: ["images/scraping_1.png", "images/scraping_2.png"],
+                images: [],
                 tags: ["Python", "Selenium", "Pandas", "Beautiful Soup", "Data Engineering"]
             },
             'quiz': {
@@ -798,7 +816,7 @@
                         "Real-time visualization of scores and progress."
                     ]
                 },
-                images: ["images/quiz_1.png", "images/quiz_2.png"],
+                images: [],
                 tags: ["Python", "Dash", "Plotly", "LLM", "POO"]
             },
             'warehouse': {
@@ -908,30 +926,42 @@
             const imgElement = document.getElementById('modal-img');
             const placeholder = document.getElementById('modal-placeholder');
             
-            // Reset visibility states
-            imgElement.classList.remove('hidden');
-            placeholder.classList.add('hidden');
-
-            // Set source
-            imgElement.src = images[currentImageIndex];
-            
-            // Handle load errors gracefully without destroying the element
-            imgElement.onerror = function() {
-                this.classList.add('hidden');
+            if (images.length === 0) {
+                // If NO images, show placeholder directly and hide navigation
+                imgElement.classList.add('hidden');
                 placeholder.classList.remove('hidden');
-                lucide.createIcons();
-            };
+                
+                // Hide buttons and dots for this specific modal instance
+                document.querySelectorAll('.aspect-video button, #slider-dots').forEach(el => el.classList.add('hidden'));
+            } else {
+                // If there ARE images
+                imgElement.classList.remove('hidden');
+                placeholder.classList.add('hidden');
+                document.querySelectorAll('.aspect-video button, #slider-dots').forEach(el => el.classList.remove('hidden'));
 
-            // Update Dots
-            const dotsContainer = document.getElementById('slider-dots');
-            dotsContainer.innerHTML = images.map((_, idx) => 
-                `<div class="w-2 h-2 rounded-full transition-all ${idx === currentImageIndex ? 'bg-blue-500 w-4' : 'bg-white/50'}"></div>`
-            ).join('');
+                // Set source
+                imgElement.src = images[currentImageIndex];
+                
+                // Handle load errors gracefully without destroying the element
+                imgElement.onerror = function() {
+                    this.classList.add('hidden');
+                    placeholder.classList.remove('hidden');
+                    lucide.createIcons();
+                };
+
+                // Update Dots
+                const dotsContainer = document.getElementById('slider-dots');
+                dotsContainer.innerHTML = images.map((_, idx) => 
+                    `<div class="w-2 h-2 rounded-full transition-all ${idx === currentImageIndex ? 'bg-blue-500 w-4' : 'bg-white/50'}"></div>`
+                ).join('');
+            }
+            lucide.createIcons();
         }
 
         function nextSlide() {
             if (!currentProjectId) return;
             const total = projectsData[currentProjectId].images.length;
+            if (total === 0) return;
             currentImageIndex = (currentImageIndex + 1) % total;
             updateSlider();
         }
@@ -939,6 +969,7 @@
         function prevSlide() {
             if (!currentProjectId) return;
             const total = projectsData[currentProjectId].images.length;
+            if (total === 0) return;
             currentImageIndex = (currentImageIndex - 1 + total) % total;
             updateSlider();
         }
