@@ -222,7 +222,7 @@
                     </div>
                 </div>
 
-                <!-- Project 4 (Corrected Style) -->
+                <!-- Project 4 -->
                 <div onclick="openModal('bdd')" class="group bg-slate-900 border border-slate-800 hover:border-blue-500/50 rounded-xl p-6 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-900/10 hover:-translate-y-1 flex flex-col h-full cursor-pointer relative overflow-hidden">
                     <div class="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity text-blue-400"><i data-lucide="maximize-2" class="w-5 h-5"></i></div>
                     <div class="flex justify-between items-start mb-4"><div class="p-3 rounded-lg bg-indigo-500/10 text-indigo-400"><i data-lucide="database-backup"></i></div></div>
@@ -401,7 +401,7 @@
 
         <!-- TAB: ABOUT -->
         <div id="about" class="tab-content animate-fade-in">
-            <div class="max-w-3xl mx-auto">
+            <div class="max-w-6xl mx-auto">
                 <div class="bg-slate-900/50 border border-slate-800 p-8 rounded-2xl mb-12 text-center md:text-left">
                     <h2 class="text-3xl font-bold text-white mb-4" data-i18n="about_title">À propos de moi</h2>
                     <p class="text-slate-300 leading-relaxed text-lg" data-i18n="about_text">
@@ -410,48 +410,62 @@
                     </p>
                 </div>
 
-                <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
-                    <span class="w-8 h-1 bg-blue-500 rounded-full"></span> <span data-i18n="about_path">Mon Parcours</span>
-                </h3>
-
-                <div class="relative border-l-2 border-slate-800 ml-3 md:ml-6 space-y-12 pb-12">
-                    <!-- Item 1 -->
-                    <div class="relative pl-8 md:pl-12">
-                        <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 bg-emerald-500 border-emerald-900 shadow-xl shadow-emerald-500/20"></div>
-                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                            <h3 class="text-xl font-bold text-white" data-i18n="path_but_title">BUT Science des Données</h3>
-                            <span class="text-sm font-mono text-slate-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700">2024 - 2027</span>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <!-- Column 1: Professional Experience -->
+                    <div>
+                        <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                            <span class="w-8 h-1 bg-blue-500 rounded-full"></span> <span data-i18n="about_exp">Expériences Professionnelles</span>
+                        </h3>
+                        
+                        <div class="relative border-l-2 border-slate-800 ml-3 md:ml-6 space-y-12 pb-12">
+                            <!-- Item: Manager -->
+                            <div class="relative pl-8 md:pl-12">
+                                <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 bg-blue-500 border-blue-900 shadow-xl shadow-blue-500/20"></div>
+                                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
+                                    <h3 class="text-xl font-bold text-white" data-i18n="path_job_title">Manager</h3>
+                                    <span class="text-sm font-mono text-slate-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700" data-i18n="path_job_date">Oct 2023 - Présent</span>
+                                </div>
+                                <div class="text-lg font-medium mb-3 flex items-center gap-2 text-blue-400">
+                                    <i data-lucide="briefcase" class="w-4 h-4"></i> Pizza Hut
+                                </div>
+                                <p class="text-slate-400 leading-relaxed bg-slate-900/50 p-4 rounded-lg border border-slate-800/50" data-i18n="path_job_desc">Gestion d'équipe, comptabilité journalière et résolution de problèmes opérationnels.</p>
+                            </div>
                         </div>
-                        <div class="text-lg font-medium mb-3 flex items-center gap-2 text-emerald-400">
-                            <i data-lucide="graduation-cap" class="w-4 h-4"></i> IUT de Metz
-                        </div>
-                        <p class="text-slate-400 leading-relaxed bg-slate-900/50 p-4 rounded-lg border border-slate-800/50" data-i18n="path_but_desc">Formation intensive en statistiques, programmation (Python, R, SQL) et BI.</p>
                     </div>
 
-                    <!-- Item 2 -->
-                    <div class="relative pl-8 md:pl-12">
-                        <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 bg-blue-500 border-blue-900 shadow-xl shadow-blue-500/20"></div>
-                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                            <h3 class="text-xl font-bold text-white" data-i18n="path_job_title">Manager</h3>
-                            <span class="text-sm font-mono text-slate-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700" data-i18n="path_job_date">Oct 2023 - Présent</span>
-                        </div>
-                        <div class="text-lg font-medium mb-3 flex items-center gap-2 text-blue-400">
-                            <i data-lucide="briefcase" class="w-4 h-4"></i> Pizza Hut
-                        </div>
-                        <p class="text-slate-400 leading-relaxed bg-slate-900/50 p-4 rounded-lg border border-slate-800/50" data-i18n="path_job_desc">Gestion d'équipe, comptabilité journalière et résolution de problèmes opérationnels.</p>
-                    </div>
+                    <!-- Column 2: Academic Background -->
+                    <div>
+                        <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                            <span class="w-8 h-1 bg-emerald-500 rounded-full"></span> <span data-i18n="about_edu">Formation Académique</span>
+                        </h3>
 
-                    <!-- Item 3 -->
-                    <div class="relative pl-8 md:pl-12">
-                        <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 bg-emerald-500 border-emerald-900 shadow-xl shadow-emerald-500/20"></div>
-                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-                            <h3 class="text-xl font-bold text-white" data-i18n="path_bac_title">Baccalauréat International</h3>
-                            <span class="text-sm font-mono text-slate-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700">2022 - 2023</span>
+                        <div class="relative border-l-2 border-slate-800 ml-3 md:ml-6 space-y-12 pb-12">
+                            <!-- Item: BUT -->
+                            <div class="relative pl-8 md:pl-12">
+                                <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 bg-emerald-500 border-emerald-900 shadow-xl shadow-emerald-500/20"></div>
+                                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
+                                    <h3 class="text-xl font-bold text-white" data-i18n="path_but_title">BUT Science des Données</h3>
+                                    <span class="text-sm font-mono text-slate-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700">2024 - 2027</span>
+                                </div>
+                                <div class="text-lg font-medium mb-3 flex items-center gap-2 text-emerald-400">
+                                    <i data-lucide="graduation-cap" class="w-4 h-4"></i> IUT de Metz
+                                </div>
+                                <p class="text-slate-400 leading-relaxed bg-slate-900/50 p-4 rounded-lg border border-slate-800/50" data-i18n="path_but_desc">Formation intensive en statistiques, programmation (Python, R, SQL) et BI.</p>
+                            </div>
+
+                            <!-- Item: Bac -->
+                            <div class="relative pl-8 md:pl-12">
+                                <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 bg-emerald-500 border-emerald-900 shadow-xl shadow-emerald-500/20"></div>
+                                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
+                                    <h3 class="text-xl font-bold text-white" data-i18n="path_bac_title">Baccalauréat International</h3>
+                                    <span class="text-sm font-mono text-slate-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700">2022 - 2023</span>
+                                </div>
+                                <div class="text-lg font-medium mb-3 flex items-center gap-2 text-emerald-400">
+                                    <i data-lucide="graduation-cap" class="w-4 h-4"></i> Lycée El Khalid 2
+                                </div>
+                                <p class="text-slate-400 leading-relaxed bg-slate-900/50 p-4 rounded-lg border border-slate-800/50" data-i18n="path_bac_desc">Série scientifique, mention Bien.</p>
+                            </div>
                         </div>
-                        <div class="text-lg font-medium mb-3 flex items-center gap-2 text-emerald-400">
-                            <i data-lucide="graduation-cap" class="w-4 h-4"></i> Lycée El Khalid 2
-                        </div>
-                        <p class="text-slate-400 leading-relaxed bg-slate-900/50 p-4 rounded-lg border border-slate-800/50" data-i18n="path_bac_desc">Série scientifique, mention Bien.</p>
                     </div>
                 </div>
 
@@ -554,7 +568,7 @@
                 nav_about: "À propos",
                 nav_projects: "Projets",
                 nav_skills: "Compétences",
-                home_avail: "Disponible à partir d'Avril (10 semaines)",
+                home_avail: "À la recherche d’un stage de 10 semaines",
                 home_hi: "Bonjour, je suis",
                 home_role: "Étudiant en 2ème année BUT Science des Données à l'IUT de Metz",
                 home_desc: "Passionné par la data, je transforme les données brutes en solutions concrètes grâce à Python, SQL et la Dataviz.",
@@ -581,7 +595,8 @@
                 lang_en_lvl: "Avancé",
                 about_title: "À propos de moi",
                 about_text: "Je suis actuellement étudiant en <span class='text-blue-400 font-semibold'>2ème année de BUT Science des Données</span> à l'IUT de Metz. Passionné par l'informatique et les statistiques, je cherche à appliquer mes compétences en traitement de données et développement.",
-                about_path: "Mon Parcours",
+                about_exp: "Expériences Professionnelles",
+                about_edu: "Formation Académique",
                 path_but_title: "BUT Science des Données",
                 path_but_desc: "Formation intensive en statistiques, programmation (Python, R, SQL) et BI.",
                 path_job_title: "Manager",
@@ -614,7 +629,7 @@
                 nav_about: "About",
                 nav_projects: "Projects",
                 nav_skills: "Skills",
-                home_avail: "Available from April (10 weeks)",
+                home_avail: "Looking for a 10-week internship",
                 home_hi: "Hello, I am",
                 home_role: "2nd Year Data Science Student at IUT Metz",
                 home_desc: "Passionate about data, I transform raw data into concrete solutions using Python, SQL, and Dataviz.",
@@ -641,7 +656,8 @@
                 lang_en_lvl: "Advanced",
                 about_title: "About Me",
                 about_text: "I am currently a <span class='text-blue-400 font-semibold'>2nd-year Data Science student</span> at IUT Metz. Passionate about computer science and statistics, I am looking to apply my skills in data processing and development.",
-                about_path: "My Journey",
+                about_exp: "Professional Experience",
+                about_edu: "Academic Background",
                 path_but_title: "BUT Data Science",
                 path_but_desc: "Intensive training in statistics, programming (Python, R, SQL), and BI.",
                 path_job_title: "Manager",
@@ -980,6 +996,9 @@
                 el.classList.remove('active');
             });
             document.getElementById(tabId).classList.add('active');
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
 
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 if(btn.dataset.tab === tabId) {
