@@ -5,13 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio Data Science - Imrane Larhrib</title>
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
@@ -74,17 +71,14 @@
 </head>
 <body class="bg-slate-950 text-slate-200 min-h-screen flex flex-col selection:bg-blue-500 selection:text-white">
 
-    <!-- NAVIGATION -->
     <nav class="fixed top-0 w-full bg-slate-900/80 backdrop-blur-md border-b border-slate-800 z-50">
         <div class="max-w-6xl mx-auto px-4">
             <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
                 <div class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent cursor-pointer" onclick="switchTab('home')">
                     PORTFOLIO
                 </div>
 
                 <div class="flex items-center gap-4">
-                    <!-- Desktop Menu -->
                     <div class="hidden md:flex space-x-1">
                         <button onclick="switchTab('home')" class="nav-btn flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-300 text-slate-400 hover:text-white hover:bg-slate-800" data-tab="home">
                             <i data-lucide="terminal" class="w-4 h-4"></i>
@@ -104,13 +98,11 @@
                         </button>
                     </div>
 
-                    <!-- Language Switcher -->
                     <button onclick="toggleLanguage()" class="flex items-center gap-1 px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-sm font-semibold hover:border-blue-500 transition-colors">
                         <span id="lang-display">FR</span>
                         <i data-lucide="globe" class="w-3 h-3"></i>
                     </button>
 
-                    <!-- Mobile Menu Button -->
                     <button class="md:hidden text-slate-300 hover:text-white" onclick="toggleMenu()">
                         <i data-lucide="menu" id="menu-icon"></i>
                     </button>
@@ -118,7 +110,6 @@
             </div>
         </div>
 
-        <!-- Mobile Menu Dropdown -->
         <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-b border-slate-800 px-4 py-4 space-y-2">
             <button onclick="switchTab('home')" class="block w-full text-left px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800" data-i18n="nav_home">Accueil</button>
             <button onclick="switchTab('about')" class="block w-full text-left px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800" data-i18n="nav_about">À propos</button>
@@ -127,10 +118,8 @@
         </div>
     </nav>
 
-    <!-- MAIN CONTENT -->
     <main class="pt-24 pb-12 px-4 max-w-6xl mx-auto w-full flex-grow">
 
-        <!-- TAB: HOME -->
         <div id="home" class="tab-content active animate-fade-in">
             <div class="flex flex-col-reverse md:flex-row items-center justify-between gap-12 mt-8 md:mt-20">
                 <div class="flex-1 space-y-6">
@@ -172,15 +161,13 @@
             </div>
         </div>
 
-        <!-- TAB: PROJECTS -->
         <div id="projects" class="tab-content animate-fade-in">
             <div class="text-center space-y-4 mb-12">
                 <h2 class="text-3xl md:text-4xl font-bold text-white" data-i18n="proj_title">Projets Réalisés</h2>
-                <p class="text-slate-400" data-i18n="proj_sub">Cliquez sur un projet pour voir les détails et les images</p>
+                <p class="text-slate-400" data-i18n="proj_sub">Une sélection de mes travaux académiques et personnels</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Project 1 -->
                 <div onclick="openModal('ecommerce')" class="group bg-slate-900 border border-slate-800 hover:border-blue-500/50 rounded-xl p-6 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-900/10 hover:-translate-y-1 flex flex-col h-full cursor-pointer relative overflow-hidden">
                     <div class="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity text-blue-400"><i data-lucide="maximize-2" class="w-5 h-5"></i></div>
                     <div class="flex justify-between items-start mb-4"><div class="p-3 rounded-lg bg-orange-500/10 text-orange-400"><i data-lucide="shopping-cart"></i></div></div>
@@ -194,7 +181,6 @@
                     </div>
                 </div>
 
-                <!-- Project 2 -->
                 <div onclick="openModal('dataviz')" class="group bg-slate-900 border border-slate-800 hover:border-blue-500/50 rounded-xl p-6 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-900/10 hover:-translate-y-1 flex flex-col h-full cursor-pointer relative overflow-hidden">
                     <div class="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity text-blue-400"><i data-lucide="maximize-2" class="w-5 h-5"></i></div>
                     <div class="flex justify-between items-start mb-4"><div class="p-3 rounded-lg bg-green-500/10 text-green-400"><i data-lucide="award"></i></div></div>
@@ -208,7 +194,6 @@
                     </div>
                 </div>
 
-                <!-- Project 3 -->
                 <div onclick="openModal('immo')" class="group bg-slate-900 border border-slate-800 hover:border-blue-500/50 rounded-xl p-6 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-900/10 hover:-translate-y-1 flex flex-col h-full cursor-pointer relative overflow-hidden">
                     <div class="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity text-blue-400"><i data-lucide="maximize-2" class="w-5 h-5"></i></div>
                     <div class="flex justify-between items-start mb-4"><div class="p-3 rounded-lg bg-blue-500/10 text-blue-400"><i data-lucide="home"></i></div></div>
@@ -222,7 +207,6 @@
                     </div>
                 </div>
 
-                <!-- Project 4 -->
                 <div onclick="openModal('bdd')" class="group bg-slate-900 border border-slate-800 hover:border-blue-500/50 rounded-xl p-6 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-900/10 hover:-translate-y-1 flex flex-col h-full cursor-pointer relative overflow-hidden">
                     <div class="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity text-blue-400"><i data-lucide="maximize-2" class="w-5 h-5"></i></div>
                     <div class="flex justify-between items-start mb-4"><div class="p-3 rounded-lg bg-indigo-500/10 text-indigo-400"><i data-lucide="database-backup"></i></div></div>
@@ -236,7 +220,6 @@
                     </div>
                 </div>
 
-                <!-- Project 5 -->
                 <div onclick="openModal('scraping')" class="group bg-slate-900 border border-slate-800 hover:border-blue-500/50 rounded-xl p-6 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-900/10 hover:-translate-y-1 flex flex-col h-full cursor-pointer relative overflow-hidden">
                     <div class="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity text-blue-400"><i data-lucide="maximize-2" class="w-5 h-5"></i></div>
                     <div class="flex justify-between items-start mb-4"><div class="p-3 rounded-lg bg-purple-500/10 text-purple-400"><i data-lucide="terminal"></i></div></div>
@@ -250,7 +233,6 @@
                     </div>
                 </div>
 
-                 <!-- Project 6 -->
                  <div onclick="openModal('quiz')" class="group bg-slate-900 border border-slate-800 hover:border-blue-500/50 rounded-xl p-6 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-900/10 hover:-translate-y-1 flex flex-col h-full cursor-pointer relative overflow-hidden">
                     <div class="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity text-blue-400"><i data-lucide="maximize-2" class="w-5 h-5"></i></div>
                     <div class="flex justify-between items-start mb-4"><div class="p-3 rounded-lg bg-pink-500/10 text-pink-400"><i data-lucide="code-2"></i></div></div>
@@ -264,7 +246,6 @@
                     </div>
                 </div>
 
-                 <!-- Project 7 -->
                  <div onclick="openModal('warehouse')" class="group bg-slate-900 border border-slate-800 hover:border-blue-500/50 rounded-xl p-6 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-900/10 hover:-translate-y-1 flex flex-col h-full cursor-pointer relative overflow-hidden">
                     <div class="absolute top-0 right-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity text-blue-400"><i data-lucide="maximize-2" class="w-5 h-5"></i></div>
                     <div class="flex justify-between items-start mb-4"><div class="p-3 rounded-lg bg-cyan-500/10 text-cyan-400"><i data-lucide="database"></i></div></div>
@@ -280,7 +261,6 @@
             </div>
         </div>
 
-        <!-- TAB: SKILLS -->
         <div id="skills" class="tab-content animate-fade-in">
             <div class="text-center space-y-4 mb-8">
                 <h2 class="text-3xl md:text-4xl font-bold text-white" data-i18n="skill_title">Compétences Techniques</h2>
@@ -288,7 +268,6 @@
             </div>
 
             <div class="space-y-12 max-w-5xl mx-auto">
-                <!-- Main Stack -->
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                     <div class="flex items-center gap-4 p-4 rounded-xl border border-blue-500/20 bg-blue-500/10 transition-all hover:scale-[1.02]">
                         <div class="text-blue-400"><i data-lucide="terminal"></i></div>
@@ -317,7 +296,6 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Python Eco -->
                     <div class="bg-slate-900/50 p-6 rounded-xl border border-slate-800">
                         <h3 class="text-xl font-semibold text-blue-400 flex items-center gap-2 mb-6">
                             <i data-lucide="terminal" class="w-5 h-5"></i> <span data-i18n="skill_py_eco">Écosystème Python</span>
@@ -333,7 +311,6 @@
                         </div>
                     </div>
 
-                    <!-- Tools -->
                     <div class="bg-slate-900/50 p-6 rounded-xl border border-slate-800">
                         <h3 class="text-xl font-semibold text-purple-400 flex items-center gap-2 mb-6">
                             <i data-lucide="database" class="w-5 h-5"></i> <span data-i18n="skill_tools">Outils & IDE</span>
@@ -349,7 +326,6 @@
                     </div>
                 </div>
 
-                <!-- Footer Skills -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-8 border-t border-slate-800">
                     <div>
                         <h3 class="text-lg font-semibold text-emerald-400 mb-4 flex items-center gap-2">
@@ -361,7 +337,6 @@
                             <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div> <span data-i18n="soft_adapt">Adaptabilité</span></li>
                             <li class="flex items-center gap-2"><div class="w-1.5 h-1.5 rounded-full bg-emerald-500"></div> <span data-i18n="soft_comm">Communication</span></li>
                         </ul>
-                        <!-- RGPD Section -->
                         <div class="mt-6">
                              <h4 class="text-md font-semibold text-white mb-2 flex items-center gap-2">
                                 <i data-lucide="shield-check" class="w-4 h-4 text-slate-400"></i> <span data-i18n="norm_title">Normes & Réglementation</span>
@@ -399,7 +374,6 @@
             </div>
         </div>
 
-        <!-- TAB: ABOUT -->
         <div id="about" class="tab-content animate-fade-in">
             <div class="max-w-6xl mx-auto">
                 <div class="bg-slate-900/50 border border-slate-800 p-8 rounded-2xl mb-12 text-center md:text-left">
@@ -411,14 +385,12 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <!-- Column 1: Professional Experience -->
                     <div>
                         <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
                             <span class="w-8 h-1 bg-blue-500 rounded-full"></span> <span data-i18n="about_exp">Expériences Professionnelles</span>
                         </h3>
                         
                         <div class="relative border-l-2 border-slate-800 ml-3 md:ml-6 space-y-12 pb-12">
-                            <!-- Item: Manager -->
                             <div class="relative pl-8 md:pl-12">
                                 <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 bg-blue-500 border-blue-900 shadow-xl shadow-blue-500/20"></div>
                                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
@@ -433,14 +405,12 @@
                         </div>
                     </div>
 
-                    <!-- Column 2: Academic Background -->
                     <div>
                         <h3 class="text-2xl font-bold text-white mb-8 flex items-center gap-3">
                             <span class="w-8 h-1 bg-emerald-500 rounded-full"></span> <span data-i18n="about_edu">Formation Académique</span>
                         </h3>
 
                         <div class="relative border-l-2 border-slate-800 ml-3 md:ml-6 space-y-12 pb-12">
-                            <!-- Item: BUT -->
                             <div class="relative pl-8 md:pl-12">
                                 <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 bg-emerald-500 border-emerald-900 shadow-xl shadow-emerald-500/20"></div>
                                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
@@ -453,7 +423,6 @@
                                 <p class="text-slate-400 leading-relaxed bg-slate-900/50 p-4 rounded-lg border border-slate-800/50" data-i18n="path_but_desc">Formation intensive en statistiques, programmation (Python, R, SQL) et BI.</p>
                             </div>
 
-                            <!-- Item: Bac -->
                             <div class="relative pl-8 md:pl-12">
                                 <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 bg-emerald-500 border-emerald-900 shadow-xl shadow-emerald-500/20"></div>
                                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
@@ -488,28 +457,27 @@
     <footer class="border-t border-slate-900 py-8 bg-slate-950 mt-auto">
         <div class="max-w-6xl mx-auto px-4 text-center text-slate-500 text-sm">
             <p>© 2025 Imrane Larhrib - Portfolio Data Science</p>
+            <div class="mt-2 text-xs text-slate-600 flex items-center justify-center gap-2">
+                <span>Développé avec HTML, Tailwind CSS & JS</span>
+                <span>•</span>
+                <span>Hébergé sur GitHub Pages</span>
+            </div>
         </div>
     </footer>
 
-    <!-- MODAL FOR PROJECTS -->
     <div id="project-modal" class="modal fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-sm hidden">
         <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col shadow-2xl relative">
             
-            <!-- Close Button -->
             <button onclick="closeModal()" class="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black/80 rounded-full text-white transition-colors">
                 <i data-lucide="x" class="w-6 h-6"></i>
             </button>
 
-            <!-- Scrollable Content -->
             <div class="overflow-y-auto p-6 md:p-8 custom-scrollbar">
                 
-                <!-- Content (Dynamic) -->
                 <div id="modal-content">
-                    <!-- Default Content -->
                     <h2 class="text-3xl font-bold text-white mb-2" id="modal-title">Project Title</h2>
                     <p class="text-blue-400 mb-6" id="modal-subtitle">Subtitle</p>
                     
-                    <!-- Slider Container -->
                     <div class="relative aspect-video bg-slate-950 rounded-xl overflow-hidden border border-slate-800 mb-6 group">
                         <img id="modal-img" src="" alt="Project Image" class="w-full h-full object-contain bg-slate-950">
                         <div id="modal-placeholder" class="hidden absolute inset-0 flex items-center justify-center bg-slate-800 text-slate-500 flex-col gap-2">
@@ -517,7 +485,6 @@
                             <span data-i18n="modal_no_img">Image non disponible</span>
                         </div>
                         
-                        <!-- Navigation Buttons -->
                         <button onclick="prevSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-black/50 hover:bg-blue-600 rounded-full text-white opacity-0 group-hover:opacity-100 transition-all">
                             <i data-lucide="chevron-left" class="w-6 h-6"></i>
                         </button>
@@ -525,10 +492,8 @@
                             <i data-lucide="chevron-right" class="w-6 h-6"></i>
                         </button>
 
-                        <!-- Dots Indicator -->
                         <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2" id="slider-dots">
-                            <!-- Dots generated by JS -->
-                        </div>
+                            </div>
                     </div>
 
                     <div class="prose prose-invert max-w-none">
@@ -536,19 +501,16 @@
                             Description...
                         </p>
                         
-                        <!-- POINTS CLÉS SECTION -->
                         <div class="bg-slate-800/50 p-6 rounded-xl border border-slate-700 mb-6">
                             <h4 class="text-white font-semibold mb-4 flex items-center gap-2">
                                 <i data-lucide="check-circle-2" class="text-blue-500 w-5 h-5"></i> <span data-i18n="modal_points">Points Clés & Réalisations</span>
                             </h4>
                             <ul class="modal-points text-slate-300 space-y-2" id="modal-points">
-                                <!-- Points generated by JS -->
-                            </ul>
+                                </ul>
                         </div>
 
                         <div class="flex flex-wrap gap-2" id="modal-tags">
-                            <!-- Tags generated by JS -->
-                        </div>
+                            </div>
                     </div>
                 </div>
             </div>
