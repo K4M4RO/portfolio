@@ -189,7 +189,7 @@ export default function ChatBox({ onClose }) {
   // ── Envoi d'un message ────────────────────────────────────────────────────
   const handleSend = async () => {
     const trimmed = input.trim();
-    if (!trimmed || isLoading || aiMode === "checking" || aiMode === "webllm_loading" || messageCount >= 10) return;
+    if (!trimmed || isLoading || aiMode === "checking" || aiMode === "webllm_loading" || messageCount >= 50) return;
 
     const newCount = messageCount + 1;
     setMessageCount(newCount);
@@ -237,7 +237,7 @@ export default function ChatBox({ onClose }) {
     }
   };
 
-  const isInputDisabled = isLoading || aiMode === "checking" || aiMode === "webllm_loading" || messageCount >= 10;
+  const isInputDisabled = isLoading || aiMode === "checking" || aiMode === "webllm_loading" || messageCount >= 50;
 
   // ─────────────────────────────────────────────────────────────────────────
   return (
@@ -301,8 +301,8 @@ export default function ChatBox({ onClose }) {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder={
-              messageCount >= 10
-                ? "Limite de démo atteinte (10/10). Pour continuer la discussion, contactez Imrane sur LinkedIn !"
+              messageCount >= 50
+                ? "Limite de démo atteinte (50/50). Pour continuer, contactez-moi sur LinkedIn !"
                 : aiMode === "checking"
                 ? "Détection en cours..."
                 : aiMode === "webllm_loading"

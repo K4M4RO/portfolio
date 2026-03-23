@@ -17,7 +17,7 @@ const LinkedinIcon = () => (
 const Hero = ({ setActiveTab, lang = "FR" }) => {
   const t = {
     FR: {
-      badge: "À la recherche d’un stage de 10 semaines",
+      badge: "Passionné par l'Intelligence Artificielle et la Data Science",
       hello: "Bonjour, je suis ",
       subtitle: "Étudiant en 2ème année BUT Science des Données à l'IUT de Metz",
       desc: "Passionné par la data, je transforme les données brutes en solutions concrètes grâce à Python, SQL et la Dataviz.",
