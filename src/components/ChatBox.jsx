@@ -34,8 +34,9 @@ function MessageBubble({ msg, onAction }) {
     const match = textToDisplay.match(/\[ACTION:SEE_PROJECT:([^\]]+)\]/);
     if (match) {
       actionId = match[1];
-      textToDisplay = textToDisplay.replace(match[0], "").trim();
     }
+    // Supprime TOUTES les occurrences de la balise dans le texte avec le flag /g
+    textToDisplay = textToDisplay.replace(/\[ACTION:SEE_PROJECT:[^\]]+\]/g, "").trim();
   }
 
   return (
