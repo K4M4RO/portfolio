@@ -1,4 +1,4 @@
-<h1 align="center">🚀 Portfolio IA 2.0 - Assistant Intelligent & RAG</h1>
+<h1 align="center">Portfolio IA 2.0 - Assistant Intelligent & RAG</h1>
 
 <p align="center">
   <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
@@ -9,34 +9,34 @@
   <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" />
 </p>
 
-## 👋 Présentation
+## Présentation
 Bonjour ! Je suis **Imrane Larhrib**, étudiant en 2ème année BUT Science des Données (Data Science).
 Ce portfolio va bien au-delà d'un simple CV en ligne : il intègre un assistant virtuel doté d'une intelligence artificielle avancée pour interagir avec vous et vous présenter mon parcours, mes compétences et mes projets de manière dynamique.
 
 ---
 
-## 🧠 Architecture IA (Le Point Fort du Projet)
+## Architecture IA (Le Point Fort du Projet)
 
 Ce portfolio embarque une architecture hybride à la pointe de la technologie pour assurer rapidité et confidentialité :
 
-- ☁️ **Mode Cloud (Groq LPU)** : L'inférence est propulsée par l'API Groq utilisant le modèle **Llama-3.3-70b-versatile**. Grâce aux LPU (Language Processing Units) de Groq, les réponses sont générées à une vitesse fulgurante.
-- 🔒 **Mode Local (WebLLM & WebGPU)** : Pour une confidentialité totale, l'IA peut s'exécuter directement et localement dans votre navigateur sans aucune requête externe, exploitant la puissance de votre carte graphique via WebGPU.
+- **Mode Cloud (Groq LPU)** : L'inférence est propulsée par l'API Groq utilisant le modèle **Llama-3.3-70b-versatile**. Grâce aux LPU (Language Processing Units) de Groq, les réponses sont générées à une vitesse fulgurante.
+- **Mode Local (WebLLM & WebGPU)** : Pour une confidentialité totale, l'IA peut s'exécuter directement et localement dans votre navigateur sans aucune requête externe, exploitant la puissance de votre carte graphique via WebGPU.
 
-### 📚 Le Concept RAG (Retrieval-Augmented Generation)
+### Le Concept RAG (Retrieval-Augmented Generation)
 L'intelligence de l'assistant repose sur une architecture RAG. Le chatbot utilise le fichier `projects.json` comme base de connaissances dynamique. Il scanne mes compétences, mes expériences (Python, SQL, Docker, etc.) et mes réalisations métiers pour répondre à vos questions avec précision et pertinence, sans jamais "halluciner" ou inventer des informations.
 
 ---
 
-## ✨ Fonctionnalités Clés
+## Fonctionnalités Clés
 
-- 🤖 **Chatbot Intelligent & Contextuel** : Il comprend vos questions, confirme mes compétences techniques et est capable de générer des actions interactives.
-- 🎯 **Boutons de Redirection Dynamiques** : L'IA peut vous proposer un projet pertinent en temps réel et générer un bouton cliquable qui vous redirigera directement vers les détails de ce projet dans l'interface.
-- 🛡️ **Sécurité Anti-Spam** : Intégration d'un système robuste avec limitation de session (`sessionStorage`) plafonnée à 50 messages pour prévenir les abus d'API.
-- 🎨 **UI/UX Premium** : Un design sombre, moderne, 100% responsive, pensé pour offrir la meilleure expérience utilisateur avec des animations fluides.
+- **Chatbot Intelligent & Contextuel** : Il comprend vos questions, confirme mes compétences techniques et est capable de générer des actions interactives.
+- **Boutons de Redirection Dynamiques** : L'IA peut vous proposer un projet pertinent en temps réel et générer un bouton cliquable qui vous redirigera directement vers les détails de ce projet dans l'interface.
+- **Sécurité Anti-Spam** : Intégration d'un système robuste avec limitation de session (`sessionStorage`) plafonnée à 50 messages pour prévenir les abus d'API.
+- **UI/UX Premium** : Un design sombre, moderne, 100% responsive, pensé pour offrir la meilleure expérience utilisateur avec des animations fluides.
 
 ---
 
-## 🛠️ Stack Technique
+## Stack Technique
 
 ### Frontend
 - **React.js** : Bibliothèque cœur pour la réactivité de l'interface.
@@ -50,22 +50,22 @@ L'intelligence de l'assistant repose sur une architecture RAG. Le chatbot utilis
 - **WebLLM** : Inférence de modèles de langage in-browser via WebGPU.
 
 ### Data & Projets Répertoriés
-*L'IA intègre et propose des projets développés avec ces technologies :*
+L'IA intègre et propose des projets développés avec ces technologies :
 - **Python, SQL, DuckDB, PyTorch, Scikit-Learn, Power BI, Docker, VBA, Dash.**
 
 ---
 
-## 📁 Structure du Projet
+## Structure du Projet
 
 ```text
-📦 portfolio/
-├── 📂 api/                # Backend Serverless (Vercel Functions)
+portfolio/
+├── api/                   # Backend Serverless (Vercel Functions)
 │   └── chat.js            # Point d'entrée de l'API Groq / OpenAI
-├── 📂 public/             # Assets statiques (images, fonts, etc.)
-├── 📂 src/
-│   ├── 📂 components/     # Composants React (Hero, ChatBox, SkillsSection...)
-│   ├── 📂 data/           # Base de connaissances RAG (projects.json)
-│   ├── 📂 logic/          # Logique métier (aiDetector, webLLMHandler, apiHandler)
+├── public/                # Assets statiques (images, fonts, etc.)
+├── src/
+│   ├── components/        # Composants React (Hero, ChatBox, SkillsSection...)
+│   ├── data/              # Base de connaissances RAG (projects.json)
+│   ├── logic/             # Logique métier (aiDetector, webLLMHandler, apiHandler)
 │   ├── App.jsx            # Composant racine
 │   └── main.jsx           # Point de montage React
 ├── .env                   # Variables d'environnement
@@ -75,7 +75,7 @@ L'intelligence de l'assistant repose sur une architecture RAG. Le chatbot utilis
 
 ---
 
-## 🚀 Installation & Exécution Local
+## Installation & Exécution Local
 
 1. **Cloner le dépôt**
 ```bash
@@ -101,11 +101,11 @@ npm run dev
 
 ---
 
-## 📫 Contact & Liens
+## Contact & Liens
 
 Vous souhaitez en savoir plus ou discuter d'une opportunité ?
 - **LinkedIn** : [Imrane Larhrib](https://www.linkedin.com/in/imrane-larhrib)
 - **GitHub** : [K4M4RO](https://github.com/K4M4RO)
 
 ---
-<p align="center"><i>Fait avec passion 💡 et beaucoup d'IA 🤖.</i></p>
+<p align="center"><i>Fait avec passion et beaucoup d'IA.</i></p>
