@@ -123,6 +123,9 @@ export default function ChatBox({ onClose }) {
     },
   ]);
   const [input, setInput] = useState("");
+  const [messageCount, setMessageCount] = useState(() => {
+    return parseInt(sessionStorage.getItem("chat_message_count") || "0", 10);
+  });
   const [aiMode, setAiMode] = useState("checking");
   const [progress, setProgress] = useState({ text: "", percent: 0 });
   const [isLoading, setIsLoading] = useState(false);
@@ -186,7 +189,11 @@ export default function ChatBox({ onClose }) {
   // ── Envoi d'un message ────────────────────────────────────────────────────
   const handleSend = async () => {
     const trimmed = input.trim();
-    if (!trimmed || isLoading || aiMode === "checking" || aiMode === "webllm_loading") return;
+    if (!trimmed || isLoading || aiMode === "checking" || aiMode === "webllm_loading" || messageCount >= 10) return;
+
+    const newCount = messageCount + 1;
+    setMessageCount(newCount);
+    sessionStorage.setItem("chat_message_count", newCount.toString());
 
     const userMessage = { role: "user", content: trimmed };
     setMessages((prev) => [...prev, userMessage]);
@@ -230,7 +237,7 @@ export default function ChatBox({ onClose }) {
     }
   };
 
-  const isInputDisabled = isLoading || aiMode === "checking" || aiMode === "webllm_loading";
+  const isInputDisabled = isLoading || aiMode === "checking" || aiMode === "webllm_loading" || messageCount >= 10;
 
   // ─────────────────────────────────────────────────────────────────────────
   return (
@@ -294,7 +301,9 @@ export default function ChatBox({ onClose }) {
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder={
-              aiMode === "checking"
+              messageCount >= 10
+                ? "Limite de démo atteinte (10/10). Pour continuer la discussion, contactez Imrane sur LinkedIn !"
+                : aiMode === "checking"
                 ? "Détection en cours..."
                 : aiMode === "webllm_loading"
                 ? "Chargement du modèle..."
@@ -323,7 +332,10 @@ export default function ChatBox({ onClose }) {
             </svg>
           </button>
         </div>
-        <p className="text-center text-xs text-slate-600 mt-2">Entrée pour envoyer · Maj+Entrée pour sauter une ligne</p>
+        <div className="flex justify-between items-center text-[10px] sm:text-xs text-slate-500 mt-2 px-1">
+          <span>IA propulsée par Groq (Qwen 2.5)</span>
+          <span className="hidden sm:inline">Entrée pour envoyer · Maj+Entrée pour sauter une ligne</span>
+        </div>
       </div>
 
       {/* ── Toast notifications ── */}
