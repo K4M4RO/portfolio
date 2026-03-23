@@ -133,8 +133,8 @@ export default function ChatBox({ onClose }) {
 
   const handleActionClick = (id) => {
     onClose?.();
-    document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
-    window.dispatchEvent(new CustomEvent('openProjectModal', { detail: id }));
+    const cleanId = id.trim().toLowerCase();
+    window.dispatchEvent(new CustomEvent('forceOpenProject', { detail: cleanId }));
   };
 
   // Auto-scroll vers le bas à chaque nouveau message

@@ -22,7 +22,7 @@ export default function ProjectsSection({ lang = "FR" }) {
   }, []);
 
   return (
-    <div className="animate-fade-in">
+    <div id="projects" className="animate-fade-in">
       <div className="text-center space-y-4 mb-12">
         <h2 className="text-3xl md:text-4xl font-bold text-white">{text.title}</h2>
         <p className="text-slate-400">{text.desc}</p>

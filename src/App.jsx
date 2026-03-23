@@ -19,6 +19,24 @@ export default function App() {
     return () => { document.body.style.overflow = ""; };
   }, [isChatOpen]);
 
+  // Écouteur global pour forcer l'ouverture depuis le ChatBox
+  useEffect(() => {
+    const handleForceOpen = (e) => {
+      const id = e.detail;
+      console.log("Tentative d'ouverture du projet:", id);
+      
+      setActiveTab("projects");
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      setTimeout(() => {
+        window.dispatchEvent(new CustomEvent('openProjectModal', { detail: id }));
+      }, 300);
+    };
+
+    window.addEventListener('forceOpenProject', handleForceOpen);
+    return () => window.removeEventListener('forceOpenProject', handleForceOpen);
+  }, []);
+
   const renderSection = () => {
     switch (activeTab) {
       case "home":     return <Hero setActiveTab={setActiveTab} lang={lang} />;
