@@ -333,7 +333,7 @@ export default function ChatBox({ onClose }) {
           </button>
         </div>
         <div className="flex justify-between items-center text-[10px] sm:text-xs text-slate-500 mt-2 px-1">
-          <span>IA propulsée par Groq (Qwen 2.5)</span>
+          <span>IA propulsée par Groq (Llama 3.3)</span>
           <span className="hidden sm:inline">Entrée pour envoyer · Maj+Entrée pour sauter une ligne</span>
         </div>
       </div>
