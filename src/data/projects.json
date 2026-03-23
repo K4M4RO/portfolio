@@ -1,0 +1,248 @@
+[
+  {
+    "id": "football_data",
+    "title": { "FR": "Plateforme Data Football Pro", "EN": "Pro Football Data Platform" },
+    "subtitle": { "FR": "Data Engineering, ELT & Dash", "EN": "Data Engineering, ELT & Dash" },
+    "shortDesc": { "FR": "Plateforme centralisant les données de 3 fournisseurs avec DuckDB embarqué.", "EN": "Platform centralizing data from 3 providers with embedded DuckDB." },
+    "fullDesc": { 
+      "FR": "Plateforme centralisant les données de 3 fournisseurs (StatsBomb, SkillCorner, Transfermarkt). L'ensemble du pipeline ELT est conteneurisé via Docker avec une base DuckDB embarquée et expose un dashboard analytique interactif.",
+      "EN": "Platform centralizing data from 3 providers (StatsBomb, SkillCorner, Transfermarkt). The entire ELT pipeline is dockerized with an embedded DuckDB database and exposes an interactive analytical dashboard."
+    },
+    "points": {
+      "FR": [
+        "Architecture ELT modulaire avec extraction via API REST et Web Scraping (BeautifulSoup).",
+        "Développement d'un moteur de réconciliation d'identités (Entity Resolution) multi-niveaux (API, déterministe, probabiliste).",
+        "Modélisation en étoile sur une base OLAP DuckDB embarquée, optimisée pour l'analytique.",
+        "Création d'un dashboard interactif full-Python avec Dash et Plotly (Scouting joueur & Analyse de match tactique)."
+      ],
+      "EN": [
+        "Modular ELT architecture with extraction via REST API and Web Scraping (BeautifulSoup).",
+        "Development of a multi-level Entity Resolution engine (API, deterministic, probabilistic).",
+        "Star schema modeling on an embedded OLAP DuckDB database, optimized for analytics.",
+        "Creation of a full-Python interactive dashboard with Dash and Plotly (Player scouting & Tactical match analysis)."
+      ]
+    },
+    "images": ["/images/foot_1.png", "/images/foot_2.png", "/images/foot_3.png", "/images/foot_4.png", "/images/foot_5.png"],
+    "tags": ["Python", "Docker", "DuckDB", "Dash", "ELT", "Web Scraping"],
+    "icon": "DatabaseBackup",
+    "iconColor": "text-blue-400",
+    "iconBg": "bg-blue-500/10",
+    "github": "https://github.com/K4M4RO/Foot-Data-Pipeline-ELT"
+  },
+  {
+    "id": "nlp_amazon",
+    "title": { "FR": "Analyse NLP & Deep Learning", "EN": "NLP & Deep Learning Analysis" },
+    "subtitle": { "FR": "Avis Amazon : BERT & PyTorch", "EN": "Amazon Reviews: BERT & PyTorch" },
+    "shortDesc": { "FR": "Solution NLP hybride pour l'analyse de sentiment et la prédiction de notation.", "EN": "Hybrid NLP solution for sentiment analysis and rating prediction." },
+    "fullDesc": { 
+      "FR": "Solution NLP hybride dédiée à l'analyse de sentiment et à la prédiction de notation (1 à 5). L'architecture combine des modèles transformeurs pour l'extraction sémantique et un réseau de neurones profond.",
+      "EN": "Hybrid NLP solution dedicated to sentiment analysis and rating prediction (1 to 5). The architecture combines transformer models for semantic extraction and a deep neural network."
+    },
+    "points": {
+      "FR": [
+        "Vectorisation sémantique des textes via le modèle BERT (sentence-transformers) avec persistance des embeddings.",
+        "Réduction de dimension (ACP/PCA) pour visualiser la séparabilité des classes sémantiques.",
+        "Développement et optimisation d'un Perceptron Multicouche (MLP) sous PyTorch avec accélération CUDA.",
+        "Architecture orientée objet séparant l'encodage (feature engineering), l'optimisation et l'inférence en temps réel."
+      ],
+      "EN": [
+        "Semantic text vectorization using the BERT model (sentence-transformers) with embedding persistence.",
+        "Dimensionality reduction (PCA) to visualize the separability of semantic classes.",
+        "Development and tuning of a Multi-Layer Perceptron (MLP) in PyTorch with CUDA acceleration.",
+        "Object-oriented architecture separating encoding (feature engineering), optimization, and real-time inference."
+      ]
+    },
+    "images": [],
+    "tags": ["PyTorch", "NLP", "BERT", "Machine Learning", "Python"],
+    "icon": "Terminal",
+    "iconColor": "text-purple-400",
+    "iconBg": "bg-purple-500/10",
+    "github": "https://github.com/K4M4RO/NLP-Sentiment-Analysis-MLP"
+  },
+  {
+    "id": "quiz",
+    "title": { "FR": "Quiz Interactif IA", "EN": "Interactive AI Quiz" },
+    "subtitle": { "FR": "Projet Académique", "EN": "Academic Project" },
+    "shortDesc": { "FR": "Application web éducative avec correction des réponses via LLM.", "EN": "Educational web application with answer grading via LLM." },
+    "tags": ["Python", "Dash", "Plotly", "LLM", "POO"],
+    "icon": "Code2",
+    "iconColor": "text-pink-400",
+    "iconBg": "bg-pink-500/10",
+    "images": ["/images/quiz_1.png", "/images/quiz_2.png", "/images/quiz_3.png", "/images/quiz_4.png"],
+    "fullDesc": { "FR": "Développement d'une plateforme d'apprentissage interactive permettant aux étudiants de tester leurs connaissances avec une correction intelligente des réponses ouvertes.", "EN": "Development of an interactive learning platform allowing students to test their knowledge with intelligent grading of open-ended answers." },
+    "points": {
+      "FR": [
+        "Architecture orientée objet (POO) pour la gestion des utilisateurs et des questions.",
+        "Interface utilisateur réactive développée avec Dash et Plotly.",
+        "Mise en place d'une IA locale et sécurisée via WSL et Ollama pour l'analyse sémantique et la correction des réponses (zéro dépendance externe).",
+        "Visualisation en temps réel des scores et de la progression."
+      ],
+      "EN": [
+        "Object-oriented architecture (OOP) for user and question management.",
+        "Reactive user interface developed with Dash and Plotly.",
+        "Setup of a secure local AI via WSL and Ollama for semantic analysis and answer correction (zero external dependency).",
+        "Real-time visualization of scores and progression."
+      ]
+    }
+  },
+  {
+    "id": "ecommerce",
+    "title": { "FR": "Analyse E-commerce & Dashboard", "EN": "E-commerce Analysis & Dashboard" },
+    "subtitle": { "FR": "Leclerc & Power BI", "EN": "Leclerc & Power BI" },
+    "shortDesc": { "FR": "Extraction automatisée et analyse comparative des prix entre magasins E.Leclerc.", "EN": "Automated extraction and comparative price analysis between E.Leclerc stores." },
+    "tags": ["Python", "Playwright", "Power BI", "Web Scraping"],
+    "icon": "ShoppingCart",
+    "iconColor": "text-orange-400",
+    "iconBg": "bg-orange-500/10",
+    "images": ["/images/ecommerce1.png", "/images/ecommerce2.png"],
+    "fullDesc": { "FR": "Ce projet vise à analyser les stratégies de prix et de stocks de plusieurs magasins E.Leclerc. J'ai développé un script de Web Scraping robuste avec Python (Playwright) pour extraire les données, puis conçu un Dashboard Power BI interactif permettant de visualiser les écarts de prix par catégorie, la disponibilité des produits et de cartographier les points de vente.", "EN": "This project aims to analyze pricing and stock strategies across multiple E.Leclerc stores. I developed a robust Web Scraping script using Python (Playwright) to extract data, and then designed an interactive Power BI Dashboard to visualize price variances by category, product availability, and map store locations." },
+    "points": {
+      "FR": [
+        "Développement de scripts de scraping avec Playwright pour extraire les données dynamiques.",
+        "Nettoyage et structuration des données avec la librairie Pandas.",
+        "Création de mesures DAX complexes pour calculer les écarts types et les moyennes pondérées.",
+        "Visualisation géographique des magasins et analyse par catégorie de produits."
+      ],
+      "EN": [
+        "Development of scraping scripts with Playwright to extract dynamic data.",
+        "Data cleaning and structuring using the Pandas library.",
+        "Creation of complex DAX measures to calculate standard deviations and weighted averages.",
+        "Geographical visualization of stores and analysis by product category."
+      ]
+    }
+  },
+  {
+    "id": "dataviz",
+    "title": { "FR": "Challenge National Dataviz", "EN": "National Dataviz Challenge" },
+    "subtitle": { "FR": "INSEE & Open Data", "EN": "INSEE & Open Data" },
+    "shortDesc": { "FR": "Infographie primée sur la déscolarisation des jeunes en France.", "EN": "Award-winning infographic on youth school dropout in France." },
+    "tags": ["Power BI", "Storytelling", "Open Data", "INSEE"],
+    "icon": "Award",
+    "iconColor": "text-green-400",
+    "iconBg": "bg-green-500/10",
+    "images": ["/images/dataviz_1.png"],
+    "fullDesc": { "FR": "Participation au challenge national organisé par l'INSEE. L'objectif était de raconter une histoire à partir de données ouvertes complexes concernant la déscolarisation des jeunes (15-29 ans) en France.", "EN": "Participation in the national challenge organized by INSEE. The goal was to tell a story using complex open data regarding the school dropout rate of young people (15-29 years old) in France." },
+    "points": {
+      "FR": [
+        "Intégration et croisement de multiples jeux de données Open Data.",
+        "Design d'une interface Power BI axée sur le Storytelling (navigation fluide, scénario).",
+        "Identification des facteurs clés influençant la déscolarisation.",
+        "Obtention de la meilleure note de la promotion pour la qualité de l'analyse."
+      ],
+      "EN": [
+        "Integration and cross-referencing of multiple Open Data datasets.",
+        "Design of a Power BI interface focused on Storytelling (fluid navigation, scenario).",
+        "Identification of key factors influencing school dropout.",
+        "Achieved the highest grade in the class for the quality of analysis."
+      ]
+    }
+  },
+  {
+    "id": "immo",
+    "title": { "FR": "Gestion Immobilière", "EN": "Real Estate Management" },
+    "subtitle": { "FR": "Application Excel/VBA", "EN": "Excel/VBA Application" },
+    "shortDesc": { "FR": "Application métier complète pour gérer biens et visites.", "EN": "Complete business application to manage properties and visits." },
+    "tags": ["VBA", "Excel", "UserForm", "Automatisation"],
+    "icon": "Home",
+    "iconColor": "text-blue-400",
+    "iconBg": "bg-blue-500/10",
+    "images": ["/images/immo_1.png", "/images/immo_2.png"],
+    "fullDesc": { "FR": "Développement d'une application complète pour une agence immobilière permettant de gérer l'intégralité du processus de vente et de location, de la prise de mandat à la signature du compromis.", "EN": "Development of a complete application for a real estate agency to manage the entire sales and rental process, from mandate acquisition to signing the preliminary contract." },
+    "points": {
+      "FR": [
+        "Conception d'une base de données relationnelle (Biens, Clients, Visites).",
+        "Création d'UserForms ergonomiques pour la saisie et la consultation des données.",
+        "Développement d'un module de planning interactif (Drag & Drop simulé) pour les visites.",
+        "Automatisation de la génération de documents (fiches biens, bons de visite)."
+      ],
+      "EN": [
+        "Design of a relational database (Properties, Clients, Visits).",
+        "Creation of ergonomic UserForms for data entry and consultation.",
+        "Development of an interactive planning module (simulated Drag & Drop) for visits.",
+        "Automated generation of documents (property sheets, visit notes)."
+      ]
+    }
+  },
+  {
+    "id": "bdd",
+    "title": { "FR": "Conception Base de Données", "EN": "Database Design" },
+    "subtitle": { "FR": "SAE - MS Access & Looping", "EN": "SAE - MS Access & Looping" },
+    "shortDesc": { "FR": "Conception MCD et implémentation relationnelle complète.", "EN": "CDM Design and full relational implementation." },
+    "tags": ["MS Access", "VBA", "Looping", "SQL", "MCD"],
+    "icon": "DatabaseBackup",
+    "iconColor": "text-indigo-400",
+    "iconBg": "bg-indigo-500/10",
+    "images": ["/images/bdd_1.png", "/images/bdd_2.png"],
+    "fullDesc": { "FR": "Projet académique complet (SAE) de conception et d'implémentation d'une base de données relationnelle. Le projet couvre tout le cycle de vie, de la modélisation conceptuelle à l'implémentation physique et l'automatisation de l'interface utilisateur.", "EN": "Complete academic project (SAE) involving the design and implementation of a relational database. The project covers the entire lifecycle, from conceptual modeling to physical implementation and user interface automation." },
+    "points": {
+      "FR": [
+        "Réalisation d'un MCD (Modèle Conceptuel de Données) avec Looping.",
+        "Mise en place de la base de données relationnelle sous MS Access.",
+        "Création d'une interface utilisateur intuitive (formulaires, états, navigation).",
+        "Utilisation de VBA pour automatiser les fonctionnalités complexes et la navigation.",
+        "Rédaction d'une documentation utilisateur complète et présentation orale."
+      ],
+      "EN": [
+        "Creation of a CDM (Conceptual Data Model) using Looping.",
+        "Implementation of the relational database in MS Access.",
+        "Creation of an intuitive user interface (forms, reports, navigation).",
+        "Use of VBA to automate complex features and navigation.",
+        "Drafting comprehensive user documentation and giving an oral presentation."
+      ]
+    }
+  },
+  {
+    "id": "scraping",
+    "title": { "FR": "Web Scraping Pipeline", "EN": "Web Scraping Pipeline" },
+    "subtitle": { "FR": "Données E-commerce", "EN": "E-commerce Data" },
+    "shortDesc": { "FR": "Collecte et structuration automatisée de données produits animaliers.", "EN": "Automated collection and structuring of pet product data." },
+    "tags": ["Python", "Selenium", "Pandas", "Beautiful Soup"],
+    "icon": "Terminal",
+    "iconColor": "text-purple-400",
+    "iconBg": "bg-purple-500/10",
+    "images": [],
+    "fullDesc": { "FR": "Mise en place d'un pipeline d'extraction de données pour constituer une base de produits animaliers (Chiens & Chats) à partir de sites e-commerce, en respectant les contraintes techniques et éthiques.", "EN": "Implementation of a data extraction pipeline to build a database of pet products (Dogs & Cats) from e-commerce sites, adhering to technical and ethical constraints." },
+    "points": {
+      "FR": [
+        "Utilisation de Selenium et Playwright pour contourner les protections anti-bot.",
+        "Gestion des délais et des user-agents pour simuler un comportement humain.",
+        "Nettoyage automatique des données (Regex) et export structuré en CSV.",
+        "Respect des fichiers robots.txt et des bonnes pratiques de scraping."
+      ],
+      "EN": [
+        "Use of Selenium and Playwright to bypass anti-bot protections.",
+        "Management of delays and user-agents to simulate human behavior.",
+        "Automated data cleaning (Regex) and structured CSV export.",
+        "Compliance with robots.txt files and scraping best practices."
+      ]
+    }
+  },
+  {
+    "id": "warehouse",
+    "title": { "FR": "Data Warehouse Associatif", "EN": "Associative Data Warehouse" },
+    "subtitle": { "FR": "ETL & BI", "EN": "ETL & BI" },
+    "shortDesc": { "FR": "Mise en place d'un entrepôt de données complet sur le tissu associatif français.", "EN": "Implementation of a comprehensive data warehouse on the French associative network." },
+    "tags": ["Apache Hop", "ETL", "SQL", "Data Modeling", "BI"],
+    "icon": "Database",
+    "iconColor": "text-cyan-400",
+    "iconBg": "bg-cyan-500/10",
+    "images": ["/images/warehouse_1.png", "/images/warehouse_2.png", "/images/warehouse_3.png"],
+    "fullDesc": { "FR": "Projet de Business Intelligence complet visant à analyser le tissu associatif français (Loi 1901). Mise en place de toute la chaîne de valeur de la donnée, de l'extraction à la visualisation.", "EN": "Complete Business Intelligence project aimed at analyzing the French associative network (1901 Law). Implementation of the entire data value chain, from extraction to visualization." },
+    "points": {
+      "FR": [
+        "Mise en place de pipelines ETL avec Apache Hop pour l'extraction, la transformation et le chargement des données issues du JOAFE.",
+        "Modélisation de l'entrepôt en schéma en étoile (dates, géographie, thèmes) avec tables de faits.",
+        "Intégration de plusieurs sources (JOAFE, COG, fichiers de référence), traitement de fichiers XML et d'archives compressées.",
+        "Mise en place de contrôles de qualité, d'historisation et de jeux de tests.",
+        "Rédaction d'une documentation technique et premières analyses sur les créations/dissolutions par période, département et thème."
+      ],
+      "EN": [
+        "Implementation of ETL pipelines with Apache Hop for extracting, transforming, and loading data from JOAFE.",
+        "Modeling the warehouse in a star schema (dates, geography, themes) with fact tables.",
+        "Integration of multiple sources (JOAFE, COG, reference files), processing of XML files and compressed archives.",
+        "Implementation of quality controls, historization, and test sets.",
+        "Drafting technical documentation and initial analyses on creations/dissolutions by period, department, and theme."
+      ]
+    }
+  }
+]
