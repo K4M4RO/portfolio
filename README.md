@@ -108,4 +108,4 @@ Vous souhaitez en savoir plus ou discuter d'une opportunité ?
 - **GitHub** : [K4M4RO](https://github.com/K4M4RO)
 
 ---
-<p align="center"><i>Fait avec passion et beaucoup d'IA.</i></p>
+<p align="center"><i>Fait avec ❤️ et beaucoup de ☕.</i></p>
