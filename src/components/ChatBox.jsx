@@ -178,10 +178,10 @@ export default function ChatBox({ onClose }) {
       setProgress({ text: "", percent: 0 });
       showToast("IA locale activée avec succès.", "success");
     } catch (error) {
-      console.warn("[ChatBox] Échec activation WebLLM, fallback Groq :", error.message);
+      console.error("[ChatBox] Échec activation WebLLM :", error);
       setAiMode("groq");
       setProgress({ text: "", percent: 0 });
-      showToast("Impossible de charger l'IA locale. Mode Groq activé.", "warning");
+      showToast(error.message || "IA locale indisponible.", "warning");
     }
   };
 
