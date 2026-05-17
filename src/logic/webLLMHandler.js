@@ -32,6 +32,16 @@ export async function initWebLLM(initProgressCallback) {
     return;
   }
 
+  // Force le GPU haute-performance (RTX plutôt qu'Intel intégré).
+  // WebLLM appelle navigator.gpu.requestAdapter() en interne — on surcharge
+  // temporairement pour injecter powerPreference avant la création de l'engine.
+  const gpu = navigator.gpu;
+  const originalRequestAdapter = gpu?.requestAdapter?.bind(gpu);
+  if (originalRequestAdapter) {
+    gpu.requestAdapter = (options = {}) =>
+      originalRequestAdapter({ ...options, powerPreference: "high-performance" });
+  }
+
   try {
     console.info(`[webLLMHandler] Chargement du modèle : ${MODEL_ID}`);
     engine = await CreateMLCEngine(MODEL_ID, { initProgressCallback });
@@ -47,6 +57,10 @@ export async function initWebLLM(initProgressCallback) {
     }
 
     throw new Error(`Échec du chargement : ${error.message}`);
+  } finally {
+    if (originalRequestAdapter) {
+      gpu.requestAdapter = originalRequestAdapter;
+    }
   }
 }
 
