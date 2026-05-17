@@ -9,15 +9,15 @@ import projectsData from "../data/projects.json";
 
 function ModeBadge({ aiMode }) {
   const config = {
-    groq:               { icon: "🟢", label: "Mode Cloud (Groq)",      cls: "bg-emerald-900/60 text-emerald-300" },
-    webllm_uninitialized: { icon: "⚡", label: "IA locale disponible",  cls: "bg-amber-900/60 text-amber-300" },
-    webllm_loading:     { icon: "⚡", label: "Chargement IA locale...", cls: "bg-violet-900/60 text-violet-300" },
-    webllm_ready:       { icon: "⚡", label: "Mode Local (WebGPU)",     cls: "bg-violet-900/60 text-violet-300" },
+    groq:                 { label: "Cloud · Groq",        cls: "bg-emerald-900/60 text-emerald-300" },
+    webllm_uninitialized: { label: "IA locale disponible", cls: "bg-amber-900/60 text-amber-300" },
+    webllm_loading:       { label: "Chargement...",        cls: "bg-violet-900/60 text-violet-300" },
+    webllm_ready:         { label: "Local · WebGPU",       cls: "bg-violet-900/60 text-violet-300" },
   };
-  const { icon, label, cls } = config[aiMode] ?? config.groq;
+  const { label, cls } = config[aiMode] ?? config.groq;
   return (
-    <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium ${cls}`}>
-      {icon} {label}
+    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${cls}`}>
+      {label}
     </span>
   );
 }
@@ -112,7 +112,7 @@ export default function ChatBox({ onClose }) {
   const [messages, setMessages] = useState([
     {
       role: "assistant",
-      content: "Bonjour ! Je suis l'assistant IA de ce portfolio. Posez-moi vos questions sur les projets, compétences ou expériences du développeur 👋",
+      content: "Bonjour ! Je suis l'assistant IA de ce portfolio. Posez-moi vos questions sur les projets, compétences ou expériences du développeur.",
     },
   ]);
   const [input, setInput] = useState("");
@@ -176,7 +176,7 @@ export default function ChatBox({ onClose }) {
       });
       setAiMode("webllm_ready");
       setProgress({ text: "", percent: 0 });
-      showToast("⚡ IA locale activée avec succès !", "success");
+      showToast("IA locale activée avec succès.", "success");
     } catch (error) {
       console.warn("[ChatBox] Échec activation WebLLM, fallback Groq :", error.message);
       setAiMode("groq");
@@ -216,7 +216,7 @@ export default function ChatBox({ onClose }) {
           console.warn("[ChatBox] WebLLM crash, fallback Groq :", webllmError.message);
           setAiMode("groq");
           currentMode = "groq";
-          showToast("⚠️ IA locale indisponible, basculement vers Groq.", "warning");
+          showToast("IA locale indisponible, basculement vers Groq.", "warning");
           reply = await askAPI(trimmed, projectsData);
         }
       } else {
@@ -290,12 +290,11 @@ export default function ChatBox({ onClose }) {
                        text-white text-sm font-medium transition-all duration-200 shadow-lg shadow-violet-900/30
                        hover:shadow-violet-900/50 hover:scale-[1.01] active:scale-[0.99]"
           >
-            <span>⚡</span>
-            <span>Activer l'IA locale</span>
+            Activer l'IA locale
             <span className="text-violet-300 text-xs font-normal">(~2.2 Go à télécharger)</span>
           </button>
           <p className="text-center text-xs text-slate-500 mt-2">
-            Un GPU compatible WebGPU a été détecté. L'IA s'exécutera entièrement dans votre navigateur — vos données restent sur votre appareil et ne transitent par aucun serveur.
+            Un GPU compatible WebGPU a été détecté. L'inférence s'effectue entièrement dans votre navigateur — aucune requête n'est envoyée à un serveur externe.
           </p>
           <button
             onClick={handleSwitchToGroq}
@@ -360,7 +359,7 @@ export default function ChatBox({ onClose }) {
               onClick={handleTrySwitchToWebLLM}
               className="text-violet-400 hover:text-violet-300 transition-colors underline underline-offset-2 ml-2 flex-shrink-0"
             >
-              ⚡ Essayer l'IA locale
+              Essayer l'IA locale
             </button>
           )}
           {aiMode === "webllm_ready" && (
@@ -368,7 +367,7 @@ export default function ChatBox({ onClose }) {
               onClick={handleSwitchToGroq}
               className="text-emerald-400 hover:text-emerald-300 transition-colors underline underline-offset-2 ml-2 flex-shrink-0"
             >
-              ☁ Revenir à Groq
+              Revenir à Groq
             </button>
           )}
           {(aiMode === "webllm_uninitialized" || aiMode === "webllm_loading") && (
