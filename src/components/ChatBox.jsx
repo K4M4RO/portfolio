@@ -334,7 +334,11 @@ export default function ChatBox({ onClose }) {
           </button>
         </div>
         <div className="flex justify-between items-center text-[10px] sm:text-xs text-slate-500 mt-2 px-1">
-          <span>IA propulsée par Groq (Llama 3.3)</span>
+          <span>
+            {aiMode === "webllm_ready"
+              ? "IA locale · Phi-3 mini (WebGPU)"
+              : "IA propulsée par Groq (Llama 3.3)"}
+          </span>
           <span className="hidden sm:inline">Entrée pour envoyer · Maj+Entrée pour sauter une ligne</span>
         </div>
       </div>
