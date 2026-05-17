@@ -4,8 +4,11 @@ export default function AboutSection({ lang = "FR" }) {
   const t = {
     FR: {
       title: "À propos de moi",
-      intro: "Je suis actuellement étudiant en 2ème année de BUT Science des Données à l'IUT de Metz. Passionné par l'informatique et les statistiques, je cherche à appliquer mes compétences en traitement de données et développement.",
+      intro: "Étudiant en 2ème année de BUT Science des Données à l'IUT de Metz, avec une expérience de stage en Data Engineering chez FC Metz. Passionné par la donnée et le développement, j'aime concevoir des solutions techniques complètes, du pipeline ETL aux interfaces utilisateur.",
       expTitle: "Expériences Professionnelles",
+      fcMetz: "Data Engineer Intern",
+      fcMetzDate: "Jan - Juil 2026",
+      fcMetzDesc: "Pipelines ETL, modèles ML, APIs REST sécurisées (FastAPI/JWT), interfaces frontend (Next.js, React). Gestion du Data Lake AWS S3 et bases PostgreSQL. Système RBAC multi-dimensionnel et déploiement CI/CD.",
       manager: "Manager",
       present: "Oct 2023 - Présent",
       pizzaHut: "Gestion d'équipe, comptabilité journalière et résolution de problèmes opérationnels.",
@@ -19,8 +22,11 @@ export default function AboutSection({ lang = "FR" }) {
     },
     EN: {
       title: "About Me",
-      intro: "I am currently a 2nd-year Data Science student at IUT de Metz. Passionate about computer science and statistics, I seek to apply my skills in data processing and development.",
+      intro: "2nd-year Data Science student at IUT de Metz, with Data Engineering internship experience at FC Metz. Passionate about data and development, I enjoy building end-to-end technical solutions, from ETL pipelines to user interfaces.",
       expTitle: "Professional Experience",
+      fcMetz: "Data Engineer Intern",
+      fcMetzDate: "Jan - Jul 2026",
+      fcMetzDesc: "ETL pipelines, ML models, secure REST APIs (FastAPI/JWT), frontend interfaces (Next.js, React). AWS S3 Data Lake and PostgreSQL management. Multi-dimensional RBAC system and CI/CD deployment.",
       manager: "Manager",
       present: "Oct 2023 - Present",
       pizzaHut: "Team management, daily accounting, and operational problem-solving.",
@@ -52,7 +58,22 @@ export default function AboutSection({ lang = "FR" }) {
             <span className="w-8 h-1 bg-blue-500 rounded-full" />
             {text.expTitle}
           </h3>
-          <div className="relative border-l-2 border-slate-800 ml-3 md:ml-6 pb-12">
+          <div className="relative border-l-2 border-slate-800 ml-3 md:ml-6 space-y-12 pb-12">
+            <div className="relative pl-8 md:pl-12">
+              <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 bg-blue-500 border-blue-900 shadow-xl shadow-blue-500/20" />
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
+                <h4 className="text-xl font-bold text-white">{text.fcMetz}</h4>
+                <span className="text-sm font-mono text-slate-400 bg-slate-800 px-3 py-1 rounded-full border border-slate-700">
+                  {text.fcMetzDate}
+                </span>
+              </div>
+              <div className="text-lg font-medium mb-3 flex items-center gap-2 text-blue-400">
+                <Briefcase className="w-4 h-4" /> FC Metz
+              </div>
+              <p className="text-slate-400 leading-relaxed bg-slate-900/50 p-4 rounded-lg border border-slate-800/50">
+                {text.fcMetzDesc}
+              </p>
+            </div>
             <div className="relative pl-8 md:pl-12">
               <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full border-2 bg-blue-500 border-blue-900 shadow-xl shadow-blue-500/20" />
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
