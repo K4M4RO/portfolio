@@ -52,7 +52,7 @@
         "Object-oriented architecture separating encoding (feature engineering), optimization, and real-time inference."
       ]
     },
-    "images": [],
+    "images": ["images/test.png","/images/umap.png","/images/perf1.png","images/perf2.png"],
     "tags": ["PyTorch", "NLP", "BERT", "Machine Learning", "Python"],
     "icon": "Terminal",
     "iconColor": "text-purple-400",
