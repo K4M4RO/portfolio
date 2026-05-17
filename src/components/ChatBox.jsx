@@ -179,9 +179,15 @@ export default function ChatBox({ onClose }) {
       showToast("IA locale activée avec succès.", "success");
     } catch (error) {
       console.error("[ChatBox] Échec activation WebLLM :", error);
-      setAiMode("groq");
       setProgress({ text: "", percent: 0 });
-      showToast(error.message || "IA locale indisponible.", "warning");
+      if (error.isOOM) {
+        // GPU OOM intermittent — rester sur le panneau d'activation pour réessayer
+        setAiMode("webllm_uninitialized");
+        showToast("Mémoire GPU insuffisante. Réessayez.", "warning");
+      } else {
+        setAiMode("groq");
+        showToast(error.message || "IA locale indisponible.", "warning");
+      }
     }
   };
 
