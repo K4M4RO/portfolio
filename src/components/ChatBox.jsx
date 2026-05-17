@@ -1,22 +1,20 @@
 import { useState, useEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
 import { checkAICapability } from "../logic/aiDetector";
-import { initWebLLM, askWebLLM } from "../logic/webLLMHandler";
+import { initWebLLM, askWebLLM, isEngineReady } from "../logic/webLLMHandler";
 import { askAPI } from "../logic/apiHandler";
 import projectsData from "../data/projects.json";
 
 // ─── Sous-composants ───────────────────────────────────────────────────────────
 
-/** Badge indiquant le mode IA actif */
 function ModeBadge({ aiMode }) {
   const config = {
-    checking: { icon: "⏳", label: "Détection...", cls: "bg-slate-700 text-slate-300" },
-    api: { icon: "🟢", label: "Mode Cloud (API)", cls: "bg-emerald-900/60 text-emerald-300" },
-    webllm_uninitialized: { icon: "⚡", label: "IA locale disponible", cls: "bg-amber-900/60 text-amber-300" },
-    webllm_loading: { icon: "⚡", label: "Chargement IA locale...", cls: "bg-violet-900/60 text-violet-300" },
-    webllm_ready: { icon: "⚡", label: "Mode Local (WebGPU)", cls: "bg-violet-900/60 text-violet-300" },
+    groq:               { icon: "🟢", label: "Mode Cloud (Groq)",      cls: "bg-emerald-900/60 text-emerald-300" },
+    webllm_uninitialized: { icon: "⚡", label: "IA locale disponible",  cls: "bg-amber-900/60 text-amber-300" },
+    webllm_loading:     { icon: "⚡", label: "Chargement IA locale...", cls: "bg-violet-900/60 text-violet-300" },
+    webllm_ready:       { icon: "⚡", label: "Mode Local (WebGPU)",     cls: "bg-violet-900/60 text-violet-300" },
   };
-  const { icon, label, cls } = config[aiMode] ?? config.checking;
+  const { icon, label, cls } = config[aiMode] ?? config.groq;
   return (
     <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-medium ${cls}`}>
       {icon} {label}
@@ -24,18 +22,14 @@ function ModeBadge({ aiMode }) {
   );
 }
 
-/** Bulle de message individuelle */
 function MessageBubble({ msg, onAction }) {
   const isUser = msg.role === "user";
-  
+
   let textToDisplay = msg.content;
   let actionId = null;
   if (!isUser) {
     const match = textToDisplay.match(/\[ACTION:SEE_PROJECT:([^\]]+)\]/);
-    if (match) {
-      actionId = match[1];
-    }
-    // Supprime TOUTES les occurrences de la balise dans le texte avec le flag /g
+    if (match) actionId = match[1];
     textToDisplay = textToDisplay.replace(/\[ACTION:SEE_PROJECT:[^\]]+\]/g, "").trim();
   }
 
@@ -64,11 +58,11 @@ function MessageBubble({ msg, onAction }) {
       </div>
       {actionId && (
         <div className="mt-2 ml-9">
-          <button 
-             onClick={() => onAction && onAction(actionId)}
-             className="flex items-center gap-2 px-3 py-1.5 bg-blue-600/20 text-blue-400 hover:bg-blue-600/40 rounded-lg text-sm transition-colors border border-blue-600/30"
+          <button
+            onClick={() => onAction && onAction(actionId)}
+            className="flex items-center gap-2 px-3 py-1.5 bg-blue-600/20 text-blue-400 hover:bg-blue-600/40 rounded-lg text-sm transition-colors border border-blue-600/30"
           >
-             Voir le projet concerné <ArrowRight className="w-4 h-4" />
+            Voir le projet concerné <ArrowRight className="w-4 h-4" />
           </button>
         </div>
       )}
@@ -76,7 +70,6 @@ function MessageBubble({ msg, onAction }) {
   );
 }
 
-/** Indicateur de frappe animé (3 points) */
 function TypingIndicator() {
   return (
     <div className="flex justify-start mb-3">
@@ -96,7 +89,6 @@ function TypingIndicator() {
   );
 }
 
-/** Barre de progression WebLLM */
 function ProgressBar({ progress }) {
   return (
     <div className="px-4 py-3 bg-slate-800/80 border-t border-slate-700/60">
@@ -124,10 +116,12 @@ export default function ChatBox({ onClose }) {
     },
   ]);
   const [input, setInput] = useState("");
-  const [messageCount, setMessageCount] = useState(() => {
-    return parseInt(sessionStorage.getItem("chat_message_count") || "0", 10);
-  });
-  const [aiMode, setAiMode] = useState("checking");
+  const [messageCount, setMessageCount] = useState(() =>
+    parseInt(sessionStorage.getItem("chat_message_count") || "0", 10)
+  );
+  // "groq" | "webllm_uninitialized" | "webllm_loading" | "webllm_ready"
+  const [aiMode, setAiMode] = useState("groq");
+  const [webgpuError, setWebgpuError] = useState(false);
   const [progress, setProgress] = useState({ text: "", percent: 0 });
   const [isLoading, setIsLoading] = useState(false);
   const [toast, setToast] = useState(null);
@@ -137,28 +131,38 @@ export default function ChatBox({ onClose }) {
 
   const handleActionClick = (id) => {
     onClose?.();
-    const cleanId = id.trim().toLowerCase();
-    window.dispatchEvent(new CustomEvent('forceOpenProject', { detail: cleanId }));
+    window.dispatchEvent(new CustomEvent("forceOpenProject", { detail: id.trim().toLowerCase() }));
   };
 
-  // Auto-scroll vers le bas à chaque nouveau message
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isLoading]);
 
-  // ── Détection GPU au montage ──────────────────────────────────────────────
-  useEffect(() => {
-    (async () => {
-      try {
-        const capability = await checkAICapability();
-        setAiMode(capability === "webllm" ? "webllm_uninitialized" : "api");
-      } catch {
-        setAiMode("api");
-      }
-    })();
-  }, []);
+  // ── Tentative de switch vers l'IA locale ─────────────────────────────────
+  const handleTrySwitchToWebLLM = async () => {
+    setWebgpuError(false);
 
-  // ── Activation manuelle de WebLLM ─────────────────────────────────────────
+    // Engine déjà chargé dans cet onglet → switch immédiat sans re-téléchargement
+    if (isEngineReady()) {
+      setAiMode("webllm_ready");
+      return;
+    }
+
+    const capability = await checkAICapability();
+    if (capability === "api") {
+      setWebgpuError(true);
+    } else {
+      setAiMode("webllm_uninitialized");
+    }
+  };
+
+  // ── Retour à Groq ─────────────────────────────────────────────────────────
+  const handleSwitchToGroq = () => {
+    setAiMode("groq");
+    setWebgpuError(false);
+  };
+
+  // ── Chargement et activation de l'engine WebLLM ───────────────────────────
   const handleActivateWebLLM = async () => {
     setAiMode("webllm_loading");
     setProgress({ text: "Démarrage...", percent: 0 });
@@ -174,14 +178,14 @@ export default function ChatBox({ onClose }) {
       setProgress({ text: "", percent: 0 });
       showToast("⚡ IA locale activée avec succès !", "success");
     } catch (error) {
-      console.warn("[ChatBox] Échec activation WebLLM, fallback API :", error.message);
-      setAiMode("api");
+      console.warn("[ChatBox] Échec activation WebLLM, fallback Groq :", error.message);
+      setAiMode("groq");
       setProgress({ text: "", percent: 0 });
-      showToast("Impossible de charger l'IA locale. Mode cloud activé.", "warning");
+      showToast("Impossible de charger l'IA locale. Mode Groq activé.", "warning");
     }
   };
 
-  // ── Toast notifications ───────────────────────────────────────────────────
+  // ── Toast ─────────────────────────────────────────────────────────────────
   const showToast = (message, type = "info") => {
     setToast({ message, type });
     setTimeout(() => setToast(null), 4000);
@@ -190,14 +194,13 @@ export default function ChatBox({ onClose }) {
   // ── Envoi d'un message ────────────────────────────────────────────────────
   const handleSend = async () => {
     const trimmed = input.trim();
-    if (!trimmed || isLoading || aiMode === "checking" || aiMode === "webllm_loading" || messageCount >= 50) return;
+    if (!trimmed || isLoading || aiMode === "webllm_loading" || messageCount >= 50) return;
 
     const newCount = messageCount + 1;
     setMessageCount(newCount);
     sessionStorage.setItem("chat_message_count", newCount.toString());
 
-    const userMessage = { role: "user", content: trimmed };
-    setMessages((prev) => [...prev, userMessage]);
+    setMessages((prev) => [...prev, { role: "user", content: trimmed }]);
     setInput("");
     setIsLoading(true);
     inputRef.current?.focus();
@@ -210,15 +213,13 @@ export default function ChatBox({ onClose }) {
         try {
           reply = await askWebLLM(trimmed, projectsData);
         } catch (webllmError) {
-          // Fallback silencieux vers l'API si crash GPU
-          console.warn("[ChatBox] WebLLM crash, fallback API :", webllmError.message);
-          setAiMode("api");
-          currentMode = "api";
-          showToast("⚠️ IA locale indisponible, basculement vers le cloud.", "warning");
+          console.warn("[ChatBox] WebLLM crash, fallback Groq :", webllmError.message);
+          setAiMode("groq");
+          currentMode = "groq";
+          showToast("⚠️ IA locale indisponible, basculement vers Groq.", "warning");
           reply = await askAPI(trimmed, projectsData);
         }
       } else {
-        // Mode API (cloud)
         reply = await askAPI(trimmed, projectsData);
       }
     } catch (error) {
@@ -238,7 +239,7 @@ export default function ChatBox({ onClose }) {
     }
   };
 
-  const isInputDisabled = isLoading || aiMode === "checking" || aiMode === "webllm_loading" || messageCount >= 50;
+  const isInputDisabled = isLoading || aiMode === "webllm_loading" || messageCount >= 50;
 
   // ─────────────────────────────────────────────────────────────────────────
   return (
@@ -270,7 +271,16 @@ export default function ChatBox({ onClose }) {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* ── Bouton d'activation WebLLM (affiché uniquement si GPU détecté) ── */}
+      {/* ── WebGPU indisponible ── */}
+      {webgpuError && (
+        <div className="px-4 py-2.5 bg-slate-900/60 border-t border-slate-700/60">
+          <p className="text-xs text-slate-400 text-center">
+            WebGPU n'est pas disponible sur ce navigateur ou la configuration nécessaire n'est pas activée.
+          </p>
+        </div>
+      )}
+
+      {/* ── Panneau d'activation WebLLM ── */}
       {aiMode === "webllm_uninitialized" && (
         <div className="px-4 py-3 bg-slate-800/60 border-t border-slate-700/60">
           <button
@@ -285,12 +295,18 @@ export default function ChatBox({ onClose }) {
             <span className="text-violet-300 text-xs font-normal">(~2.2 Go à télécharger)</span>
           </button>
           <p className="text-center text-xs text-slate-500 mt-2">
-            Un GPU compatible WebGPU a été détecté. L'IA s'exécutera entièrement dans votre navigateur.
+            Un GPU compatible WebGPU a été détecté. L'IA s'exécutera entièrement dans votre navigateur — vos données restent sur votre appareil et ne transitent par aucun serveur.
           </p>
+          <button
+            onClick={handleSwitchToGroq}
+            className="w-full mt-2 text-xs text-slate-500 hover:text-slate-300 transition-colors text-center py-1"
+          >
+            Annuler, rester sur Groq
+          </button>
         </div>
       )}
 
-      {/* ── Barre de progression (pendant le chargement WebLLM) ── */}
+      {/* ── Barre de progression WebLLM ── */}
       {aiMode === "webllm_loading" && <ProgressBar progress={progress} />}
 
       {/* ── Zone de saisie ── */}
@@ -304,8 +320,6 @@ export default function ChatBox({ onClose }) {
             placeholder={
               messageCount >= 50
                 ? "Limite de démo atteinte (50/50). Pour continuer, contactez-moi sur LinkedIn !"
-                : aiMode === "checking"
-                ? "Détection en cours..."
                 : aiMode === "webllm_loading"
                 ? "Chargement du modèle..."
                 : "Posez votre question..."
@@ -333,14 +347,39 @@ export default function ChatBox({ onClose }) {
             </svg>
           </button>
         </div>
-        <div className="flex justify-between items-center text-[10px] sm:text-xs text-slate-500 mt-2 px-1">
-          <span>
+
+        {/* Mode label + bouton de switch */}
+        <div className="flex justify-between items-center text-[10px] sm:text-xs mt-2 px-1">
+          <span className="text-slate-500">
             {aiMode === "webllm_ready"
               ? "IA locale · Phi-3 mini (WebGPU)"
               : "IA propulsée par Groq (Llama 3.3)"}
           </span>
-          <span className="hidden sm:inline">Entrée pour envoyer · Maj+Entrée pour sauter une ligne</span>
+          {aiMode === "groq" && (
+            <button
+              onClick={handleTrySwitchToWebLLM}
+              className="text-violet-400 hover:text-violet-300 transition-colors underline underline-offset-2 ml-2 flex-shrink-0"
+            >
+              ⚡ Essayer l'IA locale
+            </button>
+          )}
+          {aiMode === "webllm_ready" && (
+            <button
+              onClick={handleSwitchToGroq}
+              className="text-emerald-400 hover:text-emerald-300 transition-colors underline underline-offset-2 ml-2 flex-shrink-0"
+            >
+              ☁ Revenir à Groq
+            </button>
+          )}
+          {(aiMode === "webllm_uninitialized" || aiMode === "webllm_loading") && (
+            <span className="hidden sm:inline text-slate-600">Entrée pour envoyer · Maj+Entrée pour sauter une ligne</span>
+          )}
         </div>
+        {(aiMode === "groq" || aiMode === "webllm_ready") && (
+          <p className="hidden sm:block text-right text-[10px] text-slate-600 mt-0.5 px-1">
+            Entrée pour envoyer · Maj+Entrée pour sauter une ligne
+          </p>
+        )}
       </div>
 
       {/* ── Toast notifications ── */}
