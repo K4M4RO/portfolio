@@ -1,4 +1,4 @@
-<h1 align="center">Portfolio IA 2.0 - Assistant Intelligent & RAG</h1>
+<h1 align="center">Portfolio IA 2.0 - Assistant Intelligent</h1>
 <h1 align="center">https://portfolio-imranelarhrib2017-2874s-projects.vercel.app/</h1>
 
 <p align="center">
